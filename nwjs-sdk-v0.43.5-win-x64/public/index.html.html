@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Mindmap</title>
+<meta name="renderer" content="webkit">
+<link rel="stylesheet" href="./static/global-c8aec501.css"
+	type="text/css">
+<link type="text/css" rel="stylesheet" href="./static/mind.css">
+<link type="text/css" rel="stylesheet" href="./static/icons.css">
+<script async="" src="./static/analytics.js"></script>
+<script type="text/javascript" id="zhuge-js" async=""
+	src="./static/zhuge.min.js"></script>
+<script type="text/javascript" charset="UTF-8" src="./static/jquery.js"></script>
+<script type="text/javascript" charset="UTF-8"
+	src="./static/mind.util.js"></script>
+<script type="text/javascript" charset="UTF-8"
+	src="./static/mind.core.js"></script>
+<script type="text/javascript" charset="UTF-8"
+	src="./static/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
+<script type="text/javascript" charset="UTF-8"
+	src="./static/await-signals-0.1.1.js"></script>
+<script type="text/javascript" charset="UTF-8"
+	src="./static/bot.js"></script>
+<!-- <script type="text/javascript" charset="UTF-8" -->
+<!-- 	src="./static/data.js"></script> -->
+<script type="text/javascript" charset="UTF-8" src="./static/mind.ui.js"></script>
+<style type="text/css">
+@
+keyframes animate_dots { 0%{
+	opacity: 1
+}
+to {
+	opacity: 0
+}
+}
+@
+-webkit-keyframes animate_dots { 0%{
+	opacity: 1
+}
+to {
+	opacity: 0
+}
+}
+.dot0, .dot1 {
+	animation: animate_dots .9s infinite;
+	-moz-animation: animate_dots .9s infinite;
+	-webkit-animation: animate_dots .9s infinite;
+	-o-animation: animate_dots .9s infinite
+}
+.dot1 {
+	animation-delay: .2s;
+	-webkit-animation-delay: .2s
+}
+.dot2 {
+	animation: animate_dots .9s infinite;
+	-moz-animation: animate_dots .9s infinite;
+	-webkit-animation: animate_dots .9s infinite;
+	-o-animation: animate_dots .9s infinite;
+	animation-delay: .4s;
+	-webkit-animation-delay: .4s
+}
+.dots_item {
+	display: inline-block;
+	margin-right: 5px;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: #4886ff
+}
+.verify-icon {
+	position: absolute;
+	width: 100%;
+	margin-top: 70px;
+	text-align: center
+}
+.t-mask {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	_position: absolute;
+	left: 0;
+	top: 0;
+	background: #000;
+	opacity: .5;
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);
+	z-index: 2000000000
+}
+</style>
+<script type="text/javascript" async=""
+	src="./static/tcaptcha-frame.a62693b0.js"></script>
+</head>
+<body data-gr-c-s-loaded="true">
+	<header class="">
+		<div class="header-left">
+			<a class="header-item icon" id="mind-designer-back"><span
+				class="mind-icons va_1"></span></a>
+			<div class="header-item nomargin">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+			<div tit="down" title="更多" class="header-item icon">
+				<span class="mind-icons va_1"></span>
+			</div>
+			<div title="撤销 [ ctrl + z ]" class="header-item icon undo">
+				<span class="mind-icons va_1"></span>
+			</div>
+			<div title="恢复 [ ctrl + y ]"
+				class="header-item icon redo mind-disable">
+				<span class="mind-icons va_1"></span>
+			</div>
+			<div title="格式刷 [ ctrl + g ]"
+				class="header-item icon brash mind-disable1">
+				<span class="mind-icons va_1"></span>
+			</div>
+			<div class="header-item seb"></div>
+			<div title="关联连线"
+				class="header-item icon margin_l icon_conn mind-disable1">
+				<span class="mind-icons"></span>
+			</div>
+			<div title="概要 ctrl + ]"
+				class="header-item icon margin_l summary mind-disable1">
+				<span class="mind-icons va_1"></span>
+			</div>
+			<div class="header-item seb"></div>
+			<div tit="themes" title="选择主题风格" class="header-item margin_l icon">
+				<span class="font17 mind-icons va1 "></span>
+			</div>
+			<div tit="structure" title="图形结构" class="header-item icon margin_l ">
+				<span style="font-size: 14px;" class="mind-icons va1"></span>
+			</div>
+			<div class="header-item seb"></div>
+			<div class="header-item">
+				<span id="savetip">所有更改已保存</span>
+			</div>
+		</div>
+		<div class="header-right">
+			<span tit="download" class="icon-button header-item"
+				original-title="下载"><i style="font-size: 16px;"
+				class="mind-icons"></i></span>
+			<!-- <span id="btn_colla" tit="colla" title="邀请协作" class="icon-button header-item"><i style="font-size:17px;" class="mind-icons"></i></span> -->
+			<!-- <span id="btn_share" title="分享文件" class="icon-button header-item"><i style="font-size:14px;" class="mind-icons"></i></span> -->
+			<span id="btn_share1" title="语音对话" class="icon-button header-item"
+				onclick="startRecognize();"><i style="font-size: 14px;"
+				class="mind-icons"></i></span> <span tit="preview"
+				style="margin-right: 20px;" class="icon-button header-item"
+				original-title="演示"><i style="font-size: 18px;"
+				class="mind-icons"></i></span>
+			<div tit="user" class="user-box header-item">
+				<div id="user-logo" class="user-logo">
+					<img src="./static/59118983e4b0f320c44f53ef.png">
+				</div>
+				<span class="mind-icons"></span>
+			</div>
+		</div>
+	</header>
+	<div class="mind-container" id="mind_con" style="height: 987px;"></div>
+	<div class="mind-util-container">
+		<div class="mind-dock-mdtype"></div>
+		<div class="mind-right-menu">
+			<span style="color: #5a5a5a; font-size: 18px;" class="mind-icons"></span>
+		</div>
+		<div class="mind-right-con">
+			<div class="mind-right-head">
+				<span class="mind-icons"></span>
+			</div>
+			<div class="mind-right-icons">
+				<a tit="style" title_pos="left" class="active" title="样式"
+					id="mind-style"> <span class="mind-icons"></span>
+				</a> <a tit="icon" title="图标" class="mind-icons"> <span
+					class="mind-icons"></span>
+				</a> <a tit="image" title="图片" class="mind-icons"> <span
+					class="mind-icons"></span>
+				</a> <a tit="remark" title="备注" class="mind-icons"> <span
+					class="mind-icons"></span>
+				</a> <a tit="tag" title="标签" class="mind-icons"> <span
+					class="mind-icons"></span>
+				</a> <a tit="link" title="链接" class="mind-icons"> <span
+					class="mind-icons"></span>
+				</a> <a tit="task" title="任务" class="mind-icons"> <span
+					class="mind-icons"></span>
+				</a>
+			</div>
+			<div class="mind-right-detail scroll mind-disable1">
+				<div style="display: block;" tit="style">
+					<div class="scroll">
+						<div style="margin-top: 5px;" class="title">文本</div>
+						<div>
+							<span id="mind-select-font" class="mind-select-box"><span>微软雅黑</span><label
+								class="mind-icons"></label></span> <span id="mind-number-size"
+								class="mind-number-box" style="width: 80px;"><input
+								type="text" style="width: 56px;">
+							<div>
+									<span></span><span></span>
+								</div></span>
+						</div>
+						<div style="margin-top: 8px;">
+							<span title="字体颜色" id="mind-font-color" class="mind-color-box "><label
+								class="mind-icons color_line_top"></label><span
+								class="color_line" style="background: rgb(75, 75, 75);"></span></span>
+							<span title="加粗" id="mind-font-b" class="mind-color-box"><label
+								class="mind-icons"></label></span> <span title="倾斜" id="mind-font-i"
+								class="mind-color-box"><label class="mind-icons"></label></span>
+							<span title="下划线" id="mind-font-ul" line="b"
+								class="mind-color-box"><label class="mind-icons"></label></span>
+							<span title="中划线" id="mind-font-ml" line="m"
+								class="mind-color-box"><label class="mind-icons"></label></span>
+							<span title="左对齐" id="mind-font-left" align="left"
+								class="mind-color-box"><label style="font-size: 12px;"
+								class="mind-icons"></label></span> <span title="居中对齐"
+								id="mind-font-center" align="center" class="mind-color-box "><label
+								style="font-size: 12px;" class="mind-icons"></label></span> <span
+								title="右对齐" id="mind-font-right" align="right"
+								class="mind-color-box"><label style="font-size: 12px;"
+								class="mind-icons"></label></span>
+						</div>
+						<div class="title">边框</div>
+						<div>
+							<div style="display: inline-block; text-align: center;">
+								<span style="min-width: 60px; text-align: left;" title="边框宽度"
+									id="mind-customise-bw_" class="mind-select-box"><span>1.99653px</span><label
+									class="mind-icons"></label></span> <span
+									style="min-width: 80px; text-align: left;" title="边框样式"
+									id="mind-customise-bst_" class="mind-select-box"><span>实线</span><label
+									class="mind-icons"></label></span> <span id="mind-customise-bc_"
+									title="边框颜色" class="mind-color-box "><label
+									class="mind-icons color_line_top"></label><span
+									class="color_line" style="background: rgb(184, 215, 251);"></span></span>
+								<span id="mind-customise-bs1_" title="无弧度"
+									class="mind-color-box " bdr="true"><label
+									class="mind-border-radius"></label></span> <span
+									id="mind-customise-bs2_" title="弧度" class="mind-color-box "
+									bdr="true"><label class="mind-border-radius radius4"></label></span>
+								<span id="mind-customise-bs3_" title="弧度"
+									class="mind-color-box " bdr="true"><label
+									class="mind-border-radius radius8"></label></span>
+							</div>
+						</div>
+						<div class="title">连线</div>
+						<div>
+							<span style="min-width: 80px; text-align: left;" title="连线宽度"
+								id="mind-customise-linew_" class="mind-select-box"><span>1px</span><label
+								class="mind-icons"></label></span> <span id="mind-customise-linec_"
+								title="连线颜色" class="mind-color-box"><label
+								class="mind-icons color_line_top"></label><span
+								class="color_line" style="background: rgb(85, 85, 85);"></span></span>
+						</div>
+						<div class="title">填充和背景</div>
+						<div>
+							<span title="节点背景" id="mind-topic-bg" class="mind-color-box">
+								<label class="mind-icons color_line_top"></label> <span
+								class="color_line"
+								style="background-color: rgb(255, 255, 255); color: rgb(75, 75, 75);"></span>
+							</span> <span title="画布背景" id="mind-canvas-bg" class="mind-color-box">
+								<label class="mind-icons color_line_top"></label> <span
+								class="color_line" style="background: rgb(246, 246, 246);"></span>
+							</span>
+						</div>
+						<div style="margin-top: 6px;" class="title">预置节点风格</div>
+						<div>
+							<div class="pre-topic-con">
+								<span class="pre-topic"
+									style="background: #63abf7; color: #fff; border-radius: 50%;">主题</span>
+							</div>
+							<div class="pre-topic-con">
+								<span class="pre-topic"
+									style="background: rgb(80, 194, 139); color: #fff; border-radius: 5px">主题</span>
+							</div>
+							<div class="pre-topic-con">
+								<span class="pre-topic"
+									style="border: 2px solid #f29a66; background: #fff; color: #f29a66; border-radius: 20px;">主题</span>
+							</div>
+							<div class="pre-topic-con">
+								<span class="pre-topic"
+									style="border: 2px solid #b8d7fb; background: #fff; color: #4b4b4b; border-radius: 20px;">主题</span>
+							</div>
+							<div class="pre-topic-con">
+								<span class="pre-topic"
+									style="background: #ff535c; color: #fff; border-radius: 6px;">主题</span>
+							</div>
+							<div class="pre-topic-con">
+								<span class="pre-topic"
+									style="background: #dbe2e3; color: #434b54; border-radius: 6px;">主题</span>
+							</div>
+							<div class="pre-topic-con">
+								<span class="pre-topic"
+									style="border: 2px solid #434b54; background: #fff; color: #434b54; border-radius: 6px;">主题</span>
+							</div>
+							<div class="pre-topic-con">
+								<span class="pre-topic"
+									style="background: #c8d4e6; color: #21273d; border-radius: 20px;">主题</span>
+							</div>
+							<div class="pre-topic-con">
+								<span class="pre-topic"
+									style="background: #fff; border: 1px solid #888; color: #666; border-radius: 0px;">主题</span>
+							</div>
+							<div class="pre-topic-con">
+								<span class="pre-topic"
+									style="background: #fff; border: 1px dashed #888; color: #666; border-radius: 0px;">主题</span>
+							</div>
+						</div>
+						<div class="detail-bottom">
+							<a style="margin-top: 5px;" id="clear-style-btn"
+								class="mind-button small gray">初始化节点样式</a>
+						</div>
+					</div>
+				</div>
+				<div style="display: none;" tit="icon">
+					<div class="mind-right-detail-icons">
+						<div class="title">图标</div>
+						<div>
+							<span ico="9" n="face" class="mind-icons"></span> <span ico="11"
+								n="face" class="mind-icons"></span> <span ico="10" n="face"
+								class="mind-icons"></span>
+						</div>
+						<div style="margin-top: 5px;">
+							<span ico="0" n="priority" class="mind-icons"></span> <span
+								ico="1" n="priority" class="mind-icons"></span> <span ico="2"
+								n="priority" class="mind-icons"></span> <span ico="3"
+								n="priority" class="mind-icons"></span> <span ico="4"
+								n="priority" class="mind-icons"></span> <span ico="5"
+								n="priority" class="mind-icons"></span> <span ico="6"
+								n="priority" class="mind-icons"></span> <span ico="7"
+								n="priority" class="mind-icons"></span> <span ico="8"
+								n="priority" class="mind-icons"></span>
+						</div>
+						<div style="margin-top: 5px;">
+							<span ico="33" n="arrow" class="mind-icons"></span> <span
+								ico="34" n="arrow" class="mind-icons"></span> <span ico="35"
+								n="arrow" class="mind-icons"></span> <span ico="36" n="arrow"
+								class="mind-icons"></span> <span ico="37" n="arrow"
+								class="mind-icons"></span>
+						</div>
+						<div style="margin-top: 5px;">
+							<span ico="26" n="flag" style="color: #444;" class="mind-icons"></span>
+							<span ico="27" n="flag" style="color: #60a0f0;"
+								class="mind-icons"></span> <span ico="28" n="flag"
+								style="color: #bf1e1b;" class="mind-icons"></span> <span
+								ico="29" n="flag" style="color: #ff9f1a;" class="mind-icons"></span>
+							<span ico="30" n="flag" style="color: #30bfbf;"
+								class="mind-icons"></span> <span ico="31" n="flag"
+								style="color: rgb(80, 194, 139);" class="mind-icons"></span> <span
+								ico="32" n="flag" style="color: #ff0000;" class="mind-icons"></span>
+						</div>
+						<div style="margin-top: 5px;">
+							<span ico="17" n="completion" class="mind-icons"></span> <span
+								ico="18" n="completion" class="mind-icons"></span> <span
+								ico="19" n="completion" class="mind-icons"></span> <span
+								ico="20" n="completion" class="mind-icons"></span> <span
+								ico="21" n="completion" class="mind-icons"></span> <span
+								ico="22" n="completion" class="mind-icons"></span> <span
+								ico="23" n="completion" class="mind-icons"></span> <span
+								ico="24" n="completion" class="mind-icons"></span>
+						</div>
+						<div style="margin-top: 5px;">
+							<span ico="38" class="mind-icons"></span> <span ico="39"
+								class="mind-icons"></span> <span ico="40" class="mind-icons"></span>
+							<span ico="41" class="mind-icons"></span> <span ico="42"
+								class="mind-icons"></span> <span ico="43" class="mind-icons"></span>
+							<span ico="44" class="mind-icons"></span> <span ico="45"
+								class="mind-icons"></span> <span ico="46" class="mind-icons"></span>
+							<div></div>
+							<span ico="47" class="mind-icons"></span> <span ico="48"
+								class="mind-icons"></span> <span ico="49" class="mind-icons"></span>
+							<span ico="50" class="mind-icons"></span> <span ico="51"
+								class="mind-icons"></span> <span ico="52" class="mind-icons"></span>
+							<span ico="53" class="mind-icons"></span> <span ico="54"
+								class="mind-icons"></span> <span ico="55" class="mind-icons"></span>
+							<div></div>
+							<span ico="56" class="mind-icons"></span> <span ico="57"
+								class="mind-icons"></span> <span ico="58" class="mind-icons"></span>
+							<span ico="59" class="mind-icons"></span> <span ico="60"
+								class="mind-icons"></span> <span ico="61" class="mind-icons"></span>
+							<span ico="62" class="mind-icons"></span> <span ico="63"
+								class="mind-icons"></span> <span ico="64" class="mind-icons"></span>
+						</div>
+					</div>
+				</div>
+				<div tit="image">
+					<div class="title">插入图片</div>
+					<div class="mind-group-button">
+						<a tit="upload" class="active">本地上传</a> <a tit="history">历史上传</a>
+						<a tit="online">在线图片</a> <a tit="search">搜索图片</a>
+					</div>
+					<div class="mind-image-detail">
+						<div tit="upload" style="display: block;">
+							<div id="upload-con" class="mind-upload">
+								<form id="upload_mind_img"
+									action="/mindmap/upload_img"
+									method="post" enctype="multipart/form-data">
+									<div style="margin-top: 53px;"></div>
+									<div class="text-tip" style="margin-top: 5px;"></div>
+									<span
+										style="width: 100px; margin: 0 auto; margin-top: 5px; font-size: 14px;"
+										class="mind-button">选择图片 <input type="file"
+										name="mind_upload_img_file">
+									</span>
+								</form>
+								<div style="margin-top: 5px;" class="text-tip">图片大小不能超过2M</div>
+							</div>
+							<div
+								style="padding: 0px 10px 0px 5px; color: #aaa; font-size: 12px;">支持截图后，双击节点，直接粘贴</div>
+						</div>
+						<div tit="history">
+							<div id="history-list" class="item-con upload-imgs scroll"></div>
+							<div style="margin-top: 8px;">
+								<span id="insertUserImage"
+									class="mind-button gray small mind-disable1">插入</span>
+							</div>
+						</div>
+						<div tit="online">
+							<div class="item-con">
+								<input style="width: 182px;" id="text-insert-img"
+									class="mind-text" type="text" placeholder="请将图片地址粘贴到此处">
+								<span id="btn-insert-img" class="mind-button small">插入图片</span>
+								<div>
+									<span class="text-tip error"></span>
+								</div>
+							</div>
+						</div>
+						<div tit="search">
+							<div class="item-con">
+								<div class="search-con">
+									<input style="width: 207px;" id="text-search-img"
+										class="mind-text" type="text" placeholder="请输入搜索关键字">
+									<span class="mind-button small">搜索</span>
+								</div>
+								<div style="height: 272px;" id="search-img-con" class="scroll">
+									<div
+										style="font-size: 100px; color: #aaa; width: 150px; text-align: center; margin: 0 auto; margin-top: 60px;"
+										class="mind-icons">
+										<br>
+										<div class="text-tip">输入关键字, 搜索网络图片</div>
+									</div>
+								</div>
+								<div id="image-search-btn"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div tit="remark">
+					<div class="title">
+						备注
+						<div class="mind-title-des">
+							( 支持Markdown语法 ) <a target="_blank"
+								href="http://www.markdown.cn/#overview">语法说明</a>
+						</div>
+					</div>
+					<div class="mind-dock-right-mg">
+						<textarea spellcheck="false" id="mind-topic-remark"
+							class="mind-topic-remark"></textarea>
+					</div>
+				</div>
+				<div tit="tag">
+					<div id="mind-tags-box" class="mind-topic-box">
+						<div class="mind-tags-curr">
+							<div>当前标签</div>
+							<div>
+								<span style="font-size: 12px; color: #aaa;">还没有标签，请在下方输入后回车新建</span>
+							</div>
+						</div>
+						<div class="mind-tags-color">
+							<div>标签颜色</div>
+							<div class="mt10">
+								<span style="background: #bf1e1b; color: #fff;"></span><span
+									style="background: #63abf7; color: #fff;"></span><span
+									style="background: rgb(113, 203, 45); color: #fff;"></span><span
+									style="background: #ff9f1a; color: #fff;"></span><span
+									style="background: #30bfbf; color: #fff;"></span><span
+									style="background: #444444; color: #fff;"></span><span
+									style="background: #f4f4f4; color: #333"></span><span
+									style="background: #d6f0f8; color: #276F86;"></span>
+							</div>
+						</div>
+						<div class="mind-tags-default">
+							<div>可添加标签</div>
+							<div class="mt10">
+								<span class="tags" style="background: #7a00f2;">待定</span><span
+									class="tags" style="background: #50c28b;">已确认</span><span
+									class="tags" style="background: #6d6d6d;">已完成</span><span
+									class="tags" style="background: #c4c4c4;">已关闭</span><span
+									class="tags" style="background: #2760f2;">进行中</span>
+							</div>
+							<div class="mt10" id="mind-tags-recent">
+								<span class="tags" style="background: #d6f0f8; color: #276F86;"><label>120</label><i
+									class="mind-icons"></i></span><span class="tags"
+									style="background: #d6f0f8; color: #276F86;"><label>325</label><i
+									class="mind-icons"></i></span><span class="tags"
+									style="background: #d6f0f8; color: #276F86;"><label>财务处</label><i
+									class="mind-icons"></i></span><span class="tags"
+									style="background: #d6f0f8; color: #276F86;"><label>Java</label><i
+									class="mind-icons"></i></span><span class="tags"
+									style="background: #d6f0f8; color: #276F86;"><label>C＃</label><i
+									class="mind-icons"></i></span><span class="tags"
+									style="background: #d6f0f8; color: #276F86;"><label>9</label><i
+									class="mind-icons"></i></span>
+							</div>
+						</div>
+						<div>新建标签</div>
+						<div class="mind-tags-input">
+							<input id="mind-topic-tag" type="text" placeholder="输入文本，回车新建标签">
+						</div>
+					</div>
+				</div>
+				<div tit="link">
+					<div class="title">
+						链接到网址 <a id="remove_link" class="mind-title-des">删除 </a>
+					</div>
+					<div>
+						<span class="task-item">链接地址</span><input id="mind-topic-link"
+							placeholder="请输入链接地址" type="text">
+					</div>
+					<div>
+						<span class="task-item">显示标题</span><input
+							id="mind-topic-linktitle" type="text">
+					</div>
+					<div class="title">
+						链接到附件
+						<div style="text-align: center;"
+							class="mind-disable1 upload_file_con">
+							<a id="upload_file" class="mind-button gray upload_file_btn">选择上传文件
+								&nbsp; <i class="mind-icons"></i>
+							</a>
+						</div>
+						<div style="text-align: center; color: #888;">
+							<span>附件大小不超过5M</span>
+						</div>
+					</div>
+				</div>
+				<div tit="task">
+					<div class="title">
+						任务信息 <a id="remove_task" class="mind-title-des">删除 </a>
+					</div>
+					<div>
+						<span class="task-item">优先级</span><span id="mind-task-priority"
+							class="mind-select-box"><span>无</span><label
+							class="mind-icons"></label></span>
+					</div>
+					<div>
+						<span class="task-item">完成进度</span><span id="mind-task-completion"
+							class="mind-select-box"><span>无</span><label
+							class="mind-icons"></label></span>
+					</div>
+					<div>
+						<span class="task-item">开始日期</span><span id="mind-task-start"
+							class="mind-select-box"><span>无</span><label
+							class="mind-icons"></label></span>
+					</div>
+					<div>
+						<span class="task-item">结束日期</span><span id="mind-task-end"
+							class="mind-select-box"><span>无</span><label
+							class="mind-icons"></label></span>
+					</div>
+					<div>
+						<span class="task-item">负责人</span><input id="mind-task-assigned"
+							placeholder="输入昵称，回车添加" type="text">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="width: 160px; z-index: -1;"
+			class="mind-user-menu mind-dropdown">
+			<a href="https://guojiao.cttic.cn/"
+				style="display: flex; align-items: center;" target="_blank"
+				class="dropdown-item">
+				<div id="user-logo" class="user-logo">
+					<img src="./static/59118983e4b0f320c44f53ef.png">
+				</div>&nbsp; <span class="noover">关于</span>
+			</a>
+<!-- 			<div class="seb"></div> -->
+<!-- 			<a href="#/diagrams" target="_blank" onclick="minimize();" -->
+<!-- 				class="dropdown-item"> <span class="mind-icons"></span> 最小化 -->
+<!-- 			</a> -->
+<!-- 			<div class="seb"></div> -->
+			<a href="#/login/out" class="dropdown-item" onclick="exit();">
+				<span class="mind-icons"></span> 退出
+			</a>
+		</div>
+		<div class="mind-title-menu mind-dropdown" style="z-index: -1;">
+			<div class="dropdown-item corner-item" tp="history">
+				<span class="mind-icons"></span>历史版本
+			</div>
+			<div class="dropdown-item corner-item" tp="outline">
+				<span class="mind-icons" style="color: #777;"></span>大纲
+			</div>
+			<div class="seb"></div>
+			<div id="newFile" tit="newFile" class="dropdown-item">
+				<span class="mind-icons"></span>新建空白思维导图
+			</div>
+			<div id="btn_clone" tit="btn_clone" class="dropdown-item">
+				<span class="mind-icons"></span>克隆数据中心部署清单
+			</div>
+		</div>
+		<div class="mind-context-menu" style="display: none;">
+			<div class="mind-context-menu-content">
+				<div>
+					<ul>
+						<li op="insert-child">插入子主题<span>Tab</span></li>
+						<li op="insert-siblings">插入同级主题<span>Enter</span></li>
+						<li op="insert-parent">插入父主题</li>
+						<li class="seb1"></li>
+						<li op="highlight"><i style="font-size: 12px;"
+							class="mind-icons"></i> &nbsp;高亮显示</li>
+						<li op="focus"><i style="font-size: 12px;" class="mind-icons"></i>
+							&nbsp;聚焦模式<label title="多人协作时，不可使用" class="mind-icons mind-tip"></label></li>
+						<li class="seb1"></li>
+						<li op="style">节点样式<span>Cmd + Ctrl + I</span></li>
+						<li op="remark">备注<span>Cmd/Ctrl + R</span></li>
+						<li op="link">超链接<span>Cmd/Ctrl + K</span></li>
+						<li op="tag">标签<span></span></li>
+						<li op="task">任务<span></span></li>
+						<li op="insert-connection">插入关联<span>Cmd/Ctrl + L</span></li>
+						<li class="seb1"></li>
+						<li op="copy">复制<span>Cmd/Ctrl + C</span></li>
+						<li op="cut">剪切<span>Cmd/Ctrl + X</span></li>
+						<li op="paste">粘贴<span>Cmd/Ctrl + V</span></li>
+						<li op="delete">删除<span>Del</span></li>
+						<li op="delete-self">删除当前主题<span>Ctrl + Del</span></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="mind-context-global-menu"
+			style="opacity: 0; left: 940px; top: 620px; display: none;">
+			<ul>
+				<li op="tocenter"><span class="mind-icons"></span> 定位到中心主题</li>
+				<li op="tonew"><span class="mind-icons"></span> 新建脑图</li>
+				<li class="seb1"></li>
+				<li op="hideall"><span class="mind-icons"></span> 一键关闭节点</li>
+				<li op="openall"><span class="mind-icons"></span> 一键展开节点</li>
+				<li op="torefresh"><span class="mind-icons"></span> 刷新</li>
+			</ul>
+		</div>
+		<div class="mind-connection-menu" style="display: none;">
+			<div class="mind-connection-menu-con">
+				<div class="mind-connection-menu-item">
+					连线宽度
+					<div alt="width">
+						<span ac="1" class="mind-connection-block inline"><label
+							style="height: 1px; top: 14px;"></label></span> <span ac="2"
+							class="mind-connection-block inline"><label
+							style="height: 2px; top: 13px;"></label></span> <span ac="4"
+							class="mind-connection-block inline"><label
+							style="height: 4px; top: 12px;"></label></span> <span ac="6"
+							class="mind-connection-block inline"><label
+							style="height: 6px; top: 11px;"></label></span> <span ac="7"
+							class="mind-connection-block inline"><label
+							style="height: 8px; top: 10px;"></label></span>
+					</div>
+				</div>
+				<div class="mind-connection-menu-item">
+					连线颜色
+					<div alt="color">
+						<div ac="#bf1e1b" class="mind-connection-block inline">
+							<span style="background: #bf1e1b"></span>
+						</div>
+						<div ac="#63abf7" class="mind-connection-block inline">
+							<span style="background: #63abf7"></span>
+						</div>
+						<div ac="rgb(113, 203, 45)" class="mind-connection-block inline">
+							<span style="background: rgb(113, 203, 45)"></span>
+						</div>
+						<div ac="#ff9f1a" class="mind-connection-block inline">
+							<span style="background: #ff9f1a"></span>
+						</div>
+						<div ac="#30bfbf" class="mind-connection-block inline">
+							<span style="background: #30bfbf"></span>
+						</div>
+						<div ac="#000000" class="mind-connection-block inline">
+							<span style="background: #000"></span>
+						</div>
+					</div>
+				</div>
+				<div class="mind-connection-menu-item">
+					连线类型
+					<div alt="type">
+						<div ac="solid" class="mind-connection-block">
+							<hr style="height: 4px; background: #000; border: 0px;">
+						</div>
+						<div ac="dashed" class="mind-connection-block">
+							<hr style="border: 0px; border-bottom: 4px dotted #000;">
+						</div>
+					</div>
+				</div>
+				<div class="mind-connection-menu-item">
+					箭头类型
+					<div alt="arrow">
+						<span ac="1" class="mind-connection-block inline"><label
+							class="mind-icons"></label></span> <span ac="2"
+							class="mind-connection-block inline"><label
+							class="mind-icons"></label></span> <span ac="3"
+							class="mind-connection-block inline"><label
+							style="color: #888" class="mind-icons"></label></span>
+					</div>
+				</div>
+				<div style="margin-top: 10px;">
+					<span id="delete-conn" class="mind-button small gray"
+						style="display: inline-block">删除关联</span>
+				</div>
+				<div style="height: 6px;"></div>
+			</div>
+		</div>
+		<div class="mind-summary-menu" style="display: none;">
+			<div class="mind-connection-menu-con">
+				<div class="mind-connection-menu-item">
+					概要宽度
+					<div alt="width">
+						<span ac="1" class="mind-connection-block inline"><label
+							style="height: 1px; top: 14px;"></label></span> <span ac="2"
+							class="mind-connection-block inline"><label
+							style="height: 2px; top: 13px;"></label></span> <span ac="3"
+							class="mind-connection-block inline"><label
+							style="height: 3px; top: 12px;"></label></span> <span ac="4"
+							class="mind-connection-block inline"><label
+							style="height: 4px; top: 12px;"></label></span>
+					</div>
+				</div>
+				<div class="mind-connection-menu-item">
+					概要颜色
+					<div alt="color">
+						<div ac="#bf1e1b" class="mind-connection-block inline">
+							<span style="background: #bf1e1b"></span>
+						</div>
+						<div ac="#63abf7" class="mind-connection-block inline">
+							<span style="background: #63abf7"></span>
+						</div>
+						<div ac="rgb(113, 203, 45)" class="mind-connection-block inline">
+							<span style="background: rgb(113, 203, 45)"></span>
+						</div>
+						<div ac="#ff9f1a" class="mind-connection-block inline">
+							<span style="background: #ff9f1a"></span>
+						</div>
+						<div ac="#30bfbf" class="mind-connection-block inline">
+							<span style="background: #30bfbf"></span>
+						</div>
+						<div ac="#000000" class="mind-connection-block inline">
+							<span style="background: #000"></span>
+						</div>
+					</div>
+				</div>
+				<div class="mind-connection-menu-item">
+					概要类型
+					<div alt="type">
+						<span ac="broken" class="mind-connection-block inline"><label
+							class="mind-icons"></label></span> <span ac="straight"
+							class="mind-connection-block inline"><label
+							class="mind-icons"></label></span> <span ac="curve"
+							class="mind-connection-block inline"><label
+							class="mind-icons"></label></span> <span ac="curve_complex"
+							class="mind-connection-block inline"><label
+							class="mind-icons"></label></span>
+					</div>
+				</div>
+				<div style="height: 6px;"></div>
+			</div>
+		</div>
+		<div class="mind-theme-dlg mind-dropdown" style="z-index: -1;">
+			<div class="mind-context-menu-head"></div>
+			<div class="mind-context-menu-content">
+				<div
+					style="margin-left: 12px; margin-right: 0px; margin-top: -8px; margin-bottom: 14px;"
+					id="mind-themes">
+					<ul>
+						<li><div style="" tit="theme3">
+								<img src="./static/mr.jpg">
+							</div></li>
+						<li><div style="" tit="default">
+								<img src="./static/wdmx.jpg">
+							</div></li>
+						<li><div style="" tit="niupizhi">
+								<img src="./static/npz.jpg">
+							</div></li>
+						<li><div style="" tit="shangwu">
+								<img src="./static/jysw.jpg">
+							</div></li>
+						<li><div style="" tit="theme1">
+								<img src="./static/zxjx.jpg">
+							</div></li>
+						<li><div style="" tit="caihongpao">
+								<img src="./static/chp.jpg">
+							</div></li>
+						<li><div style="" tit="caihongthinner">
+								<img src="./static/chl.jpg">
+							</div></li>
+						<li><div style="" tit="colorLines">
+								<img src="./static/colorlines.png">
+							</div></li>
+						<li><div style="" tit="caihong">
+								<img src="./static/ch.jpg">
+							</div></li>
+						<li><div style="" tit="jianbihua">
+								<img src="./static/jbxt.jpg">
+							</div></li>
+						<li><div style="" tit="black">
+								<img src="./static/black.jpg">
+							</div></li>
+						<li><div style="" tit="simple">
+								<img src="./static/simple.jpg">
+							</div></li>
+						<li><div style="" tit="basic">
+								<img src="./static/basic.png">
+							</div></li>
+						<li><div style="" tit="paper">
+								<img src="./static/paper.jpg">
+							</div></li>
+						<li><div style="" tit="red">
+								<img src="./static/red.jpg">
+							</div></li>
+						<li><div style="" tit="mindmap">
+								<img src="./static/mindmap.jpg">
+							</div></li>
+						<li><div style="" tit="mindmap1">
+								<img src="./static/mindmap1.jpg">
+							</div></li>
+						<li><div style="" tit="mindmap_dark">
+								<img src="./static/dark.jpg">
+							</div>
+							<span class="member-tip">会员专享</span></li>
+						<li><div style="display: none" tit="mobileTheme">
+								<img src="./static/colorlines.png">
+							</div></li>
+					</ul>
+					<div style="clear: both;"></div>
+				</div>
+				<div style="margin: 12px;">
+					<span id="mind-theme-customise" style="display: block;"
+						class="mind-button nobg">自定义风格</span>
+				</div>
+			</div>
+		</div>
+		<div class="mind-slider-dlg mind-dlg">
+			<div class="mind-context-menu-content">
+				<h4 style="padding: 22px 20px 22px 20px;">[ Ctrl + 拖拽 ]
+					选择并添加幻灯片</h4>
+				<div class="mind-slider-show mind-disable" title="开始演示">
+					<span id="startpre" class="mind-icons show"></span>
+				</div>
+				<a class="mind-slider-close">结束演示</a>
+			</div>
+		</div>
+		<ul id="mind-font-list" class="mind-menu-list" style="display: none;">
+			<li style="font-family: Arial">Arial</li>
+			<li style="font-family: Verdana">Verdana</li>
+			<li style="font-family: Georgia">Georgia</li>
+			<li style="font-family: Times New Roman">Times New Roman</li>
+			<li style="font-family: Courier New">Courier New</li>
+			<li style="font-family: Impact">Impact</li>
+			<li style="font-family: Comic Sans MS">Comic Sans MS</li>
+			<li style="font-family: Tahoma">Tahoma</li>
+			<li style="font-family: Garamond">Garamond</li>
+			<li style="font-family: Lucida Console">Lucida Console</li>
+			<li class="devider"></li>
+			<li style="font-family: 宋体">宋体</li>
+			<li style="font-family: 微软雅黑">微软雅黑</li>
+			<li style="font-family: 黑体">黑体</li>
+			<li style="font-family: 楷体">楷体</li>
+		</ul>
+		<ul id="mind-customise-topic-list" class="mind-menu-list"
+			style="display: none;">
+			<li tp="centerTopic">中心主题</li>
+			<li tp="secTopic">分支主题</li>
+			<li tp="childTopic">子主题</li>
+		</ul>
+		<div id="mind-structures" class="mind-dropdown" style="z-index: -1;">
+			<div class="dropdown-item active" tp="mind_free">
+				<span class="mind-icons font13 mind-structrue"></span> 左右分布
+			</div>
+			<div class="dropdown-item" tp="mind_right">
+				<span class="mind-icons mind-structrue"></span> 右侧分布
+			</div>
+			<div class="dropdown-item" tp="mind_left">
+				<span class="mind-icons mind-structrue"></span> 左侧分布
+			</div>
+			<div class="dropdown-item" tp="mind_tree">
+				<span class="mind-icons mind-structrue"></span> 树状组织结构图
+			</div>
+			<div class="dropdown-item" tp="mind_org">
+				<span class="mind-icons mind-structrue"></span> 组织结构图
+			</div>
+		</div>
+		<ul id="mind-customise-linew-list" class="mind-menu-list"
+			style="display: none;">
+			<li tp="1">1px</li>
+			<li tp="2">2px</li>
+			<li tp="3">3px</li>
+			<li tp="4">4px</li>
+			<li tp="5">5px</li>
+		</ul>
+		<ul id="mind-customise-linet-list" class="mind-menu-list"
+			style="display: none;">
+			<li tp="curve">曲线</li>
+			<li tp="straight">直线</li>
+			<li tp="roundBroken">圆角折线</li>
+			<li tp="broken">折线</li>
+		</ul>
+		<ul id="mind-customise-linet-list_" class="mind-menu-list"
+			style="display: none;">
+			<li tp="curve">曲线</li>
+			<li tp="straight">直线</li>
+			<li tp="roundBroken">圆角折线</li>
+			<li tp="broken">折线</li>
+		</ul>
+		<ul id="mind-customise-borderw" class="mind-menu-list"
+			style="display: none;">
+			<li tp="0">无</li>
+			<li tp="1px">1px</li>
+			<li tp="2px">2px</li>
+			<li tp="3px">3px</li>
+			<li tp="4px">4px</li>
+			<li tp="5px">5px</li>
+			<li tp="6px">6px</li>
+		</ul>
+		<ul id="mind-customise-borderst" class="mind-menu-list"
+			style="display: none;">
+			<li tp="">无</li>
+			<li tp="solid">实线</li>
+			<li tp="dashed">虚线</li>
+			<li tp="dotted">点线</li>
+			<li tp="double">双线</li>
+		</ul>
+		<div id="mind-color-picker" class="mind-menu-list"
+			style="width: 168px; height: 200px; padding: 10px; display: none;">
+			<div class="color-items" style="margin-top: 0px;">
+				<div co="" style="background-color: #FAC6D2;"></div>
+				<div co="" style="background-color: #F384AE;"></div>
+				<div co="" style="background-color: #F15A23;"></div>
+				<div co="" style="background-color: #C41230;"></div>
+				<div co="" style="background-color: #7DCDC2;"></div>
+				<div co="" style="background-color: #55BEED;"></div>
+				<div co="" style="background-color: #31A8E0;"></div>
+				<div co="" style="background-color: #0076B3;"></div>
+				<div co="" style="background-color: #B296C7;"></div>
+				<div co="" style="background-color: #662C90;"></div>
+				<div co="" style="background-color: #C1D18A;"></div>
+				<div co="" style="background-color: #80BC42;"></div>
+				<div co="" style="background-color: #00A650;"></div>
+				<div co="" style="background-color: #16884A;"></div>
+				<div co="" style="background-color: #E9D4A7;"></div>
+				<div co="" style="background-color: #FDB813;"></div>
+				<div co="" style="background-color: #F68B1F"></div>
+				<div co="" style="background-color: #F1753F;"></div>
+				<div co="" style="background-color: #9F8759;"></div>
+				<div co="" style="background-color: #924517;"></div>
+				<div co="" style="background-color: #CFD0D2;"></div>
+				<div co="" style="background-color: #98A2AB;"></div>
+				<div co="" style="background-color: #8A8B8F;"></div>
+				<div co="" style="background-color: #381E11;"></div>
+				<div class="clear"></div>
+			</div>
+			<div class="color-items">
+				<div co="" style="background-color: rgb(255, 204, 204);"></div>
+				<div co="" style="background-color: rgb(255, 230, 204);"></div>
+				<div co="" style="background-color: rgb(255, 255, 204);"></div>
+				<div co="" style="background-color: rgb(230, 255, 204);"></div>
+				<div co="" style="background-color: rgb(204, 255, 204);"></div>
+				<div co="" style="background-color: rgb(204, 255, 230);"></div>
+				<div co="" style="background-color: rgb(204, 255, 255);"></div>
+				<div co="" style="background-color: rgb(204, 229, 255);"></div>
+				<div co="" style="background-color: rgb(204, 204, 255);"></div>
+				<div co="" style="background-color: rgb(229, 204, 255);"></div>
+				<div co="" style="background-color: rgb(255, 204, 255);"></div>
+				<div co="" style="background-color: rgb(255, 204, 230);"></div>
+				<div co="" style="background-color: rgb(255, 153, 153);"></div>
+				<div co="" style="background-color: rgb(255, 204, 153);"></div>
+				<div co="" style="background-color: rgb(255, 255, 153);"></div>
+				<div co="" style="background-color: rgb(204, 255, 153);"></div>
+				<div co="" style="background-color: rgb(153, 255, 153);"></div>
+				<div co="" style="background-color: rgb(153, 255, 204);"></div>
+				<div co="" style="background-color: rgb(153, 255, 255);"></div>
+				<div co="" style="background-color: rgb(153, 204, 255);"></div>
+				<div co="" style="background-color: rgb(153, 153, 255);"></div>
+				<div co="" style="background-color: rgb(204, 153, 255);"></div>
+				<div co="" style="background-color: rgb(255, 153, 255);"></div>
+				<div co="" style="background-color: rgb(255, 153, 204);"></div>
+				<div class="clear"></div>
+			</div>
+			<div class="color-items">
+				<div co="" style="background-color: none; color: #888;"
+					class="mind-icons"></div>
+				<div co=""
+					style="background-color: rgb(255, 255, 255); border: 1px solid #ddd;"></div>
+				<div co="" style="background-color: rgb(229, 229, 229);"></div>
+				<div co="" style="background-color: rgb(184, 184, 184);"></div>
+				<div co="" style="background-color: rgb(161, 161, 161);"></div>
+				<div co="" style="background-color: rgb(138, 138, 138);"></div>
+				<div co="" style="background-color: rgb(92, 92, 92);"></div>
+				<div co="" style="background-color: rgb(0, 0, 0);"></div>
+				<div class="clear"></div>
+			</div>
+			<div class="color-items">
+				# <input id="color-hex-value" tit="hex" type="text">
+			</div>
+		</div>
+		<ul id="mind-icons-priority-list" class="mind-menu-list"
+			style="display: none;">
+			<li>无</li>
+			<li priority="1" ico="0"><span
+				style="font-size: 16px; color: red;" class="mind-icons"></span> 优先级
+				1 （最高）</li>
+			<li priority="2" ico="1"><span
+				style="font-size: 16px; color: #f68b1f;" class="mind-icons"></span>
+				优先级 2</li>
+			<li priority="3" ico="2"><span
+				style="font-size: 16px; color: #999;" class="mind-icons"></span>
+				优先级 3</li>
+			<li priority="4" ico="3"><span
+				style="font-size: 16px; color: #999;" class="mind-icons"></span>
+				优先级 4</li>
+			<li priority="5" ico="4"><span
+				style="font-size: 16px; color: #999;" class="mind-icons"></span>
+				优先级 5</li>
+			<li priority="6" ico="5"><span
+				style="font-size: 16px; color: #999;" class="mind-icons"></span>
+				优先级 6</li>
+			<li priority="7" ico="6"><span
+				style="font-size: 16px; color: #999;" class="mind-icons"></span>
+				优先级 7</li>
+			<li priority="8" ico="7"><span
+				style="font-size: 16px; color: #999;" class="mind-icons"></span>
+				优先级 8</li>
+			<li priority="9" ico="8"><span
+				style="font-size: 16px; color: #bbb;" class="mind-icons"></span>
+				优先级 9（最低）</li>
+		</ul>
+		<ul id="mind-icons-completion-list" class="mind-menu-list"
+			style="display: none;">
+			<li>无</li>
+			<li completion="10" ico="17"><span
+				style="font-size: 16px; color: #888;" class="mind-icons"></span>
+				10%</li>
+			<li completion="25" ico="18"><span
+				style="font-size: 16px; color: #666;" class="mind-icons"></span>
+				25%</li>
+			<li completion="35" ico="19"><span
+				style="font-size: 16px; color: #444;" class="mind-icons"></span>
+				35%</li>
+			<li completion="50" ico="20"><span
+				style="font-size: 16px; color: #444;" class="mind-icons"></span>
+				50%</li>
+			<li completion="65" ico="21"><span
+				style="font-size: 16px; color: #444;" class="mind-icons"></span>
+				65%</li>
+			<li completion="75" ico="22"><span
+				style="font-size: 16px; color: #C1D18A;" class="mind-icons"></span>
+				75%</li>
+			<li completion="90" ico="23"><span
+				style="font-size: 16px; color: #80BC42;" class="mind-icons"></span>
+				90%</li>
+			<li completion="100" ico="24"><span
+				style="font-size: 16px; color: #00A650;" class="mind-icons"></span>
+				100%</li>
+		</ul>
+		<div class="mind-download-dlg mind-dlg" style="display: none;">
+			<h3>
+				下载为<span class="mind-dlog-close mind-icons"></span>
+			</h3>
+			<div class="mind-dlg-content">
+				<form id="export_form"
+					action="/diagram_export/mindmap"
+					method="post">
+					<input id="export_definition" type="hidden" name="definition"
+						value=""> <input id="export_title" type="hidden"
+						name="title" value="数据中心部署清单"> <input
+						id="export_width" type="hidden" name="width"
+						value="8732.045654296875"> <input id="export_height"
+						type="hidden" name="height" value="3795.1910400390625"> <input
+						type="hidden" name="chartId" id="downChartId"
+						value="5def526fe4b0dba2615703d9"> <input type="hidden"
+						name="ignore" value="definition">
+<!-- 					<div class="mind-download-dlg-item"> -->
+<!-- 						<input id="export_png" checked="" value="image" type="radio" -->
+<!-- 							name="type"> <label for="export_png">图片文件（*.png）&nbsp; -->
+<!-- 							<span>将文件导出为图片</span> -->
+<!-- 						</label> -->
+<!-- 					</div> -->
+<!-- 					<div class="mind-download-dlg-item"> -->
+<!-- 						<input id="export_jpg" value="jpg" type="radio" name="type"> -->
+<!-- 						<label for="export_jpg">JPG文件（*.jpg）&nbsp; <span>将文件导出为JPG图片 -->
+<!-- 								（默认白底）</span></label> -->
+<!-- 					</div> -->
+<!-- 					<div class="mind-download-dlg-item"> -->
+<!-- 						<input id="export_pdf" value="pdf" type="radio" name="type"> -->
+<!-- 						<label for="export_pdf">PDF文件（*.pdf）&nbsp; <span>将图片保存为PDF文件</span></label> -->
+<!-- 					</div> -->
+<!-- 					<div class="mind-download-dlg-item"> -->
+<!-- 						<input id="export_pos" value="pos" type="radio" name="type"> -->
+<!-- 						<label for="export_pos">POS文件（*.pos）&nbsp; <span>包含图片和图形结构定义（可导入）</span></label> -->
+<!-- 					</div> -->
+<!-- 					<div class="mind-download-dlg-item"> -->
+<!-- 						<input id="export_xmind" type="radio" name="type" value="xmind"> -->
+<!-- 						<label for="export_xmind">XMind文件 (*.xmind)&nbsp; <span>导出为xmind文件</span></label> -->
+<!-- 					</div> -->
+<!-- 					<div class="mind-download-dlg-item"> -->
+<!-- 						<input id="export_xmind_zen" type="radio" name="type" -->
+<!-- 							value="xmindzen"> <label for="export_xmind_zen">XMind -->
+<!-- 							ZEN文件 (*.xmind)&nbsp; <span>导出为xmind ZEN文件</span> -->
+<!-- 						</label> -->
+<!-- 					</div> -->
+<!-- 					<div class="mind-download-dlg-item"> -->
+<!-- 						<input id="export_fmind" type="radio" name="type" value="fmind"> -->
+<!-- 						<label for="export_fmind">FreeMind文件 (*.mm)&nbsp; <span>导出为freemind文件</span></label> -->
+<!-- 					</div> -->
+<!-- 					<div class="seb"></div> -->
+<!-- 					<div tit="member" class="mind-download-dlg-item mind-disable1"> -->
+<!-- 						<input id="export_word" type="radio" name="type" value="word"> -->
+<!-- 						<label for="export_word">Word文件 (*.docx)&nbsp; <span>导出为word大纲文件</span></label> -->
+<!-- 					</div> -->
+<!-- 					<div tit="member" class="mind-download-dlg-item mind-disable1"> -->
+<!-- 						<input id="export_ppt" type="radio" name="type" value="ppt"> -->
+<!-- 						<label for="export_ppt">PPT文件 (*.pptx)&nbsp; <span>导出为ppt大纲文件</span></label> -->
+<!-- 					</div> -->
+<!-- 					<div tit="member" class="mind-download-dlg-item mind-disable1"> -->
+<!-- 						<input id="export_excle" type="radio" name="type" value="csv"> -->
+<!-- 						<label for="export_excle">EXCEL文件 (*.csv)&nbsp; <span>导出为excel文件</span></label> -->
+<!-- 					</div> -->
+					<div tit="member" class="mind-download-dlg-item mind-disable1">
+						<input id="export_json" type="radio" name="type" value="json">
+						<label for="export_json">JOSN源文件 (*.json)&nbsp; <span>导出为可编辑文件</span></label>
+					</div>
+					<div tit="member" class="mind-download-dlg-item mind-disable1">
+						<input id="export_svg" type="radio" name="type" value="svg">
+						<label for="export_svg">SVG文件 (*.svg)&nbsp; <span>导出为svg矢量图形</span></label>
+					</div>
+					<div tit="member" class="mind-download-dlg-item mind-disable1">
+						<input id="export_pngHD" type="radio" name="type" value="pnghd">
+						<label for="export_pngHD">高清图片文件 (*.png)&nbsp; <span>导出为高清图片</span></label>
+					</div>
+				</form>
+				<div class="mind-dlg-buttons" style="margin-bottom: 15px;">
+					<span id="btn-download" class="mind-button mind-disable">下载</span>&nbsp;&nbsp;
+					<span id="btn-download-cancel" class="mind-button gray">关闭</span>
+				</div>
+			</div>
+		</div>
+		<div class="mind-exists-dlg mind-dlg" style="height: 180px;">
+			<h3>更改主题风格</h3>
+			<div class="mind-context-menu-content" style="padding: 0px 15px;">
+				<div style="font-size: 14px;">您之前手动设置过节点样式</div>
+				<div style="font-size: 12px; margin-top: 8px;">您可以使用新的风格完全覆盖当前的样式，也可以保留手动设置过的样式</div>
+			</div>
+			<div class="mind-dlg-buttons" style="padding-right: 15px;">
+				<span id="btn-style-overwrite" style="width: 110px;"
+					class="mind-button">覆盖</span>&nbsp;&nbsp;&nbsp; <span
+					id="btn-style-remain" style="width: 128px; color: #888;"
+					class="mind-button gray">保留手动设置的样式</span>&nbsp; <span
+					id="btn-style-cancel" style="width: 32px; color: #888;"
+					class="mind-button gray">取消</span>
+			</div>
+		</div>
+		<div class="mind-theme-customise-dlg mind-dlg" style="height: 626px;">
+			<h3>自定义主题风格</h3>
+			<div class="mind-dlg-tabs">
+				<span id="mind-tabs-styles" class="selected">主题风格</span><span
+					id="mind-tabs-themes">我的主题风格</span>
+			</div>
+			<div class="mind-dlg-content">
+				<div style="height: 7px;"></div>
+				<div tit="mind-tabs-styles" style="height: 453px;">
+					<div>
+						<div class="customise-item lc">画布样式</div>
+						<div>
+							<div style="display: inline-block; text-align: center;">
+								<form id="upload_mind_img_bg"
+									action="/mindmap/upload_img_bg"
+									method="post" enctype="multipart/form-data">
+									<span title="背景颜色" id="mind-customise-canvasbg"
+										class="mind-color-box "><label
+										class="mind-icons color_line_top"></label><span
+										class="color_line"></span></span>&nbsp; <span title="背景图片"
+										id="mind-customise-imgbg" class="mind-color-box"><label
+										class="mind-icons"></label><input class="upload-file-bg"
+										type="file" name="mind_upload_bg_file"></span>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div>
+						<div class="customise-item lc">节点样式，请选择目标节点</div>
+						<div>
+							<div style="display: inline-block;">
+								<span style="min-width: 140px;" id="mind-customise-topic"
+									class="mind-select-box"><span>中心主题</span><label
+									class="mind-icons"></label></span>
+							</div>
+						</div>
+					</div>
+					<div
+						style="display: flex; justify-content: space-between; align-content: flex-start;">
+						<div style="display: inline-block;">
+							<div id="linestylecon" class="">
+								<div class="customise-item">连线样式</div>
+								<div>
+									<div
+										style="display: inline-block; text-align: center; vertical-align: top;">
+										<span style="min-width: 140px; text-align: left;"
+											id="mind-customise-linew"
+											class="mind-select-box mind-disable"><span>1px</span><label
+											class="mind-icons"></label></span>
+									</div>
+									&nbsp;
+									<div
+										style="display: inline-block; text-align: center; vertical-align: top;">
+										<span id="mind-customise-linec"
+											class="mind-color-box mind-disable"><label
+											class="mind-icons color_line_top"></label><span
+											class="color_line"></span></span>
+									</div>
+									&nbsp;
+									<div
+										style="display: inline-block; text-align: center; vertical-align: top;">
+										<span style="min-width: 100px; text-align: left;"
+											id="mind-customise-linet"
+											class="mind-select-box mind-disable"><span>1px</span><label
+											class="mind-icons"></label></span>
+									</div>
+								</div>
+							</div>
+							<div class="customise-item">文本样式</div>
+							<div>
+								<div
+									style="display: inline-block; text-align: center; vertical-align: top;">
+									<span style="min-width: 140px; text-align: left;"
+										id="mind-customise-font" class="mind-select-box"><span>微软雅黑</span><label
+										class="mind-icons"></label></span>
+								</div>
+								&nbsp;
+								<div
+									style="display: inline-block; text-align: center; vertical-align: top;">
+									<span id="mind-customise-size" class="mind-number-box"></span>
+								</div>
+								&nbsp;
+								<div
+									style="display: inline-block; text-align: center; vertical-align: top;">
+									<span id="mind-customise-color" class="mind-color-box "><label
+										class="mind-icons color_line_top"></label><span
+										class="color_line"></span></span>&nbsp; <span id="mind-customise-b"
+										class="mind-color-box "><label class="mind-icons"></label></span>&nbsp;
+									<span id="mind-customise-i" class="mind-color-box "><label
+										class="mind-icons"></label></span>
+								</div>
+							</div>
+							<div class="customise-item">边框样式</div>
+							<div class="customise-bdstyle">
+								<div
+									style="display: inline-block; text-align: center; vertical-align: top;">
+									<span style="min-width: 140px; text-align: left;"
+										id="mind-customise-bw" class="mind-select-box"><span>无</span><label
+										class="mind-icons"></label></span>
+								</div>
+								&nbsp;
+								<div
+									style="display: inline-block; text-align: center; vertical-align: top;">
+									<span id="mind-customise-bc"
+										class="mind-color-box mind-disable"><label
+										class="mind-icons color_line_top"></label><span
+										class="color_line"></span></span>
+								</div>
+								&nbsp;
+								<div
+									style="display: inline-block; text-align: center; vertical-align: top;">
+									<span id="mind-customise-bs1"
+										class="mind-color-box mind-disable"><label
+										class="mind-border-radius"></label></span>&nbsp; <span
+										id="mind-customise-bs2" class="mind-color-box mind-disable"><label
+										class="mind-border-radius radius4"></label></span>&nbsp; <span
+										id="mind-customise-bs3" class="mind-color-box mind-disable"><label
+										class="mind-border-radius radius8"></label></span>
+								</div>
+							</div>
+							<div class="customise-item">填充</div>
+							<div>
+								<div
+									style="display: inline-block; text-align: center; vertical-align: top;">
+									<span id="mind-customise-fill" class="mind-color-box "><label
+										class="mind-icons color_line_top"></label><span
+										class="color_line"></span></span>
+								</div>
+								&nbsp;
+								<div
+									style="display: inline-block; text-align: center; vertical-align: top;">
+									<span id="mind-customise-sd" class="mind-color-box "><label
+										class="mind-icons"></label></span>
+								</div>
+								&nbsp;
+							</div>
+							<div class="customise-item">填充边距</div>
+							<div>
+								<div
+									style="display: inline-block; text-align: center; vertical-align: top;">
+									<span id="mind-customise-paddingt"
+										class="mind-number-box padding"></span>
+									<div class="customise-item-des">上</div>
+								</div>
+								&nbsp;
+								<div
+									style="display: inline-block; text-align: center; vertical-align: top;">
+									<span id="mind-customise-paddingr"
+										class="mind-number-box padding"></span>
+									<div class="customise-item-des">右</div>
+								</div>
+								&nbsp;
+								<div
+									style="display: inline-block; text-align: center; vertical-align: top;">
+									<span id="mind-customise-paddingb"
+										class="mind-number-box padding"></span>
+									<div class="customise-item-des">下</div>
+								</div>
+								&nbsp;
+								<div
+									style="display: inline-block; text-align: center; vertical-align: top;">
+									<span id="mind-customise-paddingl"
+										class="mind-number-box padding"></span>
+									<div class="customise-item-des">左</div>
+								</div>
+							</div>
+						</div>
+						<div style="display: inline-block;">
+							<div id="mind-theme-customise-preview"
+								class="mind-customise-prev">
+								<div id="previewTopic" class="mind-customise-prevtp">中心主题</div>
+								<div id="previewLine" class="mind-customise-prevline">
+									<svg style="height: 20px">
+										<path d="M 20 8 L300 8" stroke="#333" fill="none" stroke-width="1"></path>
+									</svg>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="mind-dlg-buttons" style="">
+						<span id="btn-customise-save" class="mind-button">应用并保存</span>&nbsp;&nbsp;
+						<span id="btn-customise-restore" class="mind-button gray">重置样式</span>&nbsp;&nbsp;
+						<span id="btn-customise-close" class="mind-button gray">关闭</span>
+					</div>
+				</div>
+				<div tit="mind-tabs-themes" style="display: none; height: 453px;">
+					<div style="height: 423px;" id="mind-customise-themes-list"
+						class="scroll">
+						<div></div>
+					</div>
+					<div class="mind-dlg-buttons">
+						<span
+							onclick="$(&#39;#mind-tabs-styles&#39;).trigger(&#39;click&#39;)"
+							class="mind-button">新建主题风格</span>&nbsp;&nbsp; <span
+							onclick="$(&#39;.mind-theme-customise-dlg&#39;).dialog(&#39;close&#39;)"
+							class="mind-button gray">关闭</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="mind-callback-dlg mind-dlg">
+			<h3>问题反馈</h3>
+			<div style="padding: 0px 18px; margin-bottom: 12px;">
+				<div class="mind-help-content" style="margin-top: 8px;">
+					<textarea id="feedback_message"></textarea>
+				</div>
+				<div class="mind-dlg-buttons"
+					style="margin-top: 30px; padding: 4px 0px">
+					<span id="callback_dlg_save" class="mind-button">提交</span>&nbsp;
+					<div id="callback_dlg_cancel" class="mind-button gray">关闭</div>
+				</div>
+			</div>
+		</div>
+		<div id="mind-publish-dlg" class="mind-publish-dlg mind-dlg">
+			<h3>发布和公开</h3>
+			<div class="mind-dlg-content"></div>
+		</div>
+		<div id="mind-fileover-dlg" style="width: 300px;" class="mind-dlg">
+			<h3>&nbsp;</h3>
+			<h4 style="text-align: center; font-size: 16px;">文件数不足，无法继续新建</h4>
+			<div class="mind-dlg-content" style="text-align: center;">
+				<div>
+					<img src="./static/empty_user.svg">
+				</div>
+				<div style="height: 10px;"></div>
+				<div style="height: 50px;"></div>
+			</div>
+		</div>
+		<div id="mind-share-dlg" class="mind-dlg mind-share-dlg">
+			<h3>分享</h3>
+			<div class="mind-dialog-left">
+				<ul>
+					<li tit="viewlink" class="active"><a>生成浏览链接</a></li>
+					<li tit="emb"><a>嵌入到其他站点</a></li>
+					<li tit="image"><a>生成在线图片</a></li>
+				</ul>
+			</div>
+			<div class="mind-dialog-right"></div>
+			<div class="mind-dlg-buttons" style="padding: 20px 20px;">
+				<span class="mind-button gray sharedialog-close">关闭</span>
+			</div>
+		</div>
+		<div id="colla_add" class="mind-dlg mind-colladd-dlg">
+			<h3>添加协作成员</h3>
+			<div class="mind-dlg-content">
+				<div>
+					<div class="colla-tabs">
+						<a href="javascript:void(0)" tit="colla_users"
+							class="colla-tab active">最近联系人</a> <a href="javascript:void(0)"
+							tit="colla_teams" class="colla-tab">小组成员</a> <a
+							href="javascript:void(0)" tit="colla_following" class="colla-tab">我的关注</a>
+						<a href="javascript:void(0)" tit="colla_follower"
+							class="colla-tab">我的粉丝</a>
+					</div>
+					<div class="colla-context-con scroll">
+						<div id="colla_users" class="colla-tab-content"></div>
+						<div id="colla_teams" class="colla-tab-content"></div>
+						<div id="colla_following" data-type="following"
+							class="colla-tab-content"></div>
+						<div id="colla_follower" data-type="follower"
+							class="colla-tab-content"></div>
+					</div>
+				</div>
+				<div style="margin-top: 13px">
+					<div style="margin-bottom: 10px">
+						<div style="color: #666;">协作者邮箱</div>
+					</div>
+					<div class="multi-input" id="multi-input-colla"></div>
+					<div style="text-align: right;">
+						<select id="role" class="colla-role-select">
+							<option value="editor" selected="selected">编辑者</option>
+							<option value="viewer">浏览者</option>
+						</select>
+						<div style="float: right; cursor: pointer;">
+							<span id="send-colla-invite" class="mind-button okbtn"
+								style="margin-top: -2px;">发送邀请</span> <span
+								id="send-colla-invite-loading" class="mind-button okbtn"
+								style="margin-top: -5px; display: none; cursor: wait;">发送中...</span>
+						</div>
+					</div>
+					<div id="send-colla-invite-success" class="alert success"
+						style="text-align: center; display: none">邀请已发送，请耐心等待受邀人接受您的邀请。</div>
+					<div id="send-colla-invite-danger" class="alert danger"
+						style="text-align: center; display: none">邀请发送失败。</div>
+				</div>
+				<div style="margin-top: 10px">
+					<div style="color: #666;">权限列表</div>
+					<div id="role_list"></div>
+				</div>
+			</div>
+		</div>
+		<div class="mind-corner left">
+			<span class="mind-icons close"></span>
+			<div tit="shortcut" class="mind-corner-content">
+				<div class="corner-title">
+					<div class="label">快捷键</div>
+				</div>
+				<div id="shortcut-container" class="scroll">
+					<div>
+						<label><span keys="">Enter</span></label><span>增加同级主题</span>
+					</div>
+					<div>
+						<label><span keys="">Tab</span>、<span keys="">Insert</span></label><span>增加子主题</span>
+					</div>
+					<div>
+						<label><span keys="">Delete</span></label><span>删除主题</span>
+					</div>
+					<div>
+						<label><span keys="">Space</span>、直接输入</label><span>编辑主题内容</span>
+					</div>
+					<div>
+						<label><span keys="">←</span><span keys="">↑</span><span
+							keys="">↓</span><span keys="">→</span></label><span>节点导航</span>
+					</div>
+					<div>
+						<label><span keys="">Ctrl / Cmd</span>+<span keys="">←</span><span
+							keys="">↑</span><span keys="">↓</span><span keys="">→</span></label><span>画布移动</span>
+					</div>
+					<div>
+						<label><span keys="">Alt</span>+<span keys="">Enter</span>（编辑状态）</label><span>文本换行</span>
+					</div>
+					<div>
+						<label><span keys="">Ctrl / Cmd</span>+<span keys="">B</span></label><span>字体加粗</span>
+					</div>
+					<div>
+						<label><span keys="">Ctrl / Cmd</span>+<span keys="">I</span></label><span>字体倾斜</span>
+					</div>
+					<div>
+						<label><span keys="">Ctrl / Cmd</span>+<span keys="">F</span></label><span>查找节点</span>
+					</div>
+					<div>
+						<label><span keys="">Ctrl / Cmd</span>+<span keys="">C</span></label><span>复制</span>
+					</div>
+					<div>
+						<label><span keys="">Ctrl / Cmd</span>+<span keys="">X</span></label><span>剪切</span>
+					</div>
+					<div>
+						<label><span keys="">Ctrl / Cmd</span>+<span keys="">V</span></label><span>粘贴</span>
+					</div>
+					<div>
+						<label><span keys="">Ctrl / Cmd</span>+<span keys="">V</span>（编辑状态）</label><span>粘贴截图</span>
+					</div>
+					<div>
+						<label><span keys="">Ctrl / Cmd</span>+<span keys="">Z</span></label><span>撤销</span>
+					</div>
+					<div>
+						<label><span keys="">Ctrl / Cmd</span>+<span keys="">Y</span></label><span>恢复</span>
+					</div>
+					<div>
+						<label><span keys="">Ctrl / Cmd</span>+<span keys="">G</span></label><span>格式刷</span>
+					</div>
+					<div>
+						<label><span keys="">Ctrl / Cmd</span>+<span keys="">R</span></label><span>备注窗口</span>
+					</div>
+					<div>
+						<label><span keys="">Ctrl / Cmd</span>+<span keys="">1~9</span></label><span>设置优先级图标</span>
+					</div>
+					<div>
+						<label><span keys="">Ctrl / Cmd</span>+<span keys="">/</span></label><span>展开或关闭子主题</span>
+					</div>
+					<div>
+						<label><span keys="">Ctrl / Cmd</span>+<span keys="">K</span></label><span>设置链接</span>
+					</div>
+					<div>
+						<label><span keys="">Ctrl / Cmd</span>+<span keys="">
+								+ </span></label><span>画布放大</span>
+					</div>
+					<div>
+						<label><span keys="">Ctrl / Cmd</span>+<span keys="">
+								- </span></label><span>画布缩小</span>
+					</div>
+					<div>
+						<label><span keys="">Ctrl / Cmd</span>+<span keys="">
+								0 </span></label><span>画布还原</span>
+					</div>
+					<div>
+						<label><span keys="">Ctrl / Cmd</span>+<span keys="">
+								滚轮 </span></label><span>画布缩放</span>
+					</div>
+					<div>
+						<label><span keys="">Shift</span>+<span keys=""> 点击
+						</span></label><span>无视层级选择节点</span>
+					</div>
+				</div>
+			</div>
+			<div style="display: none;" tit="history">
+				<div class="corner-title">
+					<div class="label">
+						历史版本<span title="只看我创建的" class="mind-icons showmycreate"></span>
+					</div>
+				</div>
+				<div id="history-container" class="scroll">
+					<div id="history-none-tip" style="text-align: center;">
+						<div>
+							<span style="font-size: 45px;" class="mind-icons"></span>
+						</div>
+						<div style="font-size: 15px;">暂时没有版本记录</div>
+						<div class="mind-corner-des">历史版本可以进行版本查看和回溯</div>
+					</div>
+				</div>
+				<div class="mind-corner-bottom" id="btn-history-add">
+					<span class="mind-icons"></span> 创建
+				</div>
+				<div id="area-history-add" style="display: none;">
+					<textarea id="history_remark" class="input_text"
+						placeholder="请输入版本标题"></textarea>
+					<div id="btn-histoty-save" class="mind-button small"
+						style="width: 70px; display: inline-block;">确定</div>
+					<div id="btn-histoty-add-cancel" class="mind-button small nobg"
+						style="width: 70px; display: inline-block;">取消</div>
+				</div>
+			</div>
+			<div id="outline-dlg" style="display: none;" tit="outline">
+				<div class="corner-title">
+					<div class="label">大纲</div>
+				</div>
+				<div class="outline-search">
+					<input type="text" class="search-input" value=""
+						placeholder="搜索您的主题">
+				</div>
+				<div class="outline-wrapper scroll">
+					<div class="outline-curt-bg"></div>
+					<div class="outline-hover-bg"></div>
+					<div style="margin: 8px 20px; font-size: 16px; line-height: 26px;"></div>
+					<div id="outline-container" style="padding-bottom: 50px;"></div>
+					<div id="outline-container-search" style="padding-bottom: 50px;"></div>
+					<div class="outline-dragable"></div>
+				</div>
+			</div>
+		</div>
+		<div id="mind-brash-tip">
+			<div class="mind-tip-text">直接点击主题，应用格式刷样式，ESC退出</div>
+			<div class="mind-tip-close mind-icons"></div>
+		</div>
+		<div id="mind-history-tip">
+			<div class="mind-tip-text"></div>
+		</div>
+	</div>
+
+	<div>
+		<input id="signup_ticket" type="hidden"> <input id="randstr"
+			type="hidden"> <span style="display: none"
+			id="TencentCaptcha" data-appid="2046103261"
+			data-cbfn="callback_public" class="mind-button  pub-btn">点击验证</span>
+	</div>
+	<script type="text/javascript">
+window.zhuge = window.zhuge || [];window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
+window.zhuge.factory = function(b) {return function() {var a = Array.prototype.slice.call(arguments);a.unshift(b);
+window.zhuge.push(a);return window.zhuge;}};for (var i = 0; i < window.zhuge.methods.length; i++) {
+var key = window.zhuge.methods[i];window.zhuge[key] = window.zhuge.factory(key);}window.zhuge.load = function(b, x) {
+if (!document.getElementById("zhuge-js")) {var a = document.createElement("script");var verDate = new Date();
+var verStr = verDate.getFullYear().toString()+ verDate.getMonth().toString() + verDate.getDate().toString();
+a.type = "text/javascript";a.id = "zhuge-js";a.async = !0;a.src = (location.protocol == 'http:' ? "http://sdk.zhugeio.com/zhuge.min.js?v=" : 'https://zgsdk.zhugeio.com/zhuge.min.js?v=') + verStr;
+a.onerror = function(){window.zhuge.identify = window.zhuge.track = function(ename, props, callback){if(callback && Object.prototype.toString.call(callback) === '[object Function]')callback();};};
+var c = document.getElementsByTagName("script")[0];c.parentNode.insertBefore(a, c);window.zhuge._init(b, x)}};
+window.zhuge.load('3f37ba50e54f4374b9af5be6d12b208f',{debug:false});//AppKey
+</script>
+	<script type="text/javascript">
+(function(){var po_user_id = getCookie();if(po_user_id == ''){removeLoginTag();return};var userLoginTag = localStorage.getItem('userLoginTag_'+ po_user_id);if(userLoginTag){return}zhuge.identify(po_user_id, {});localStorage.setItem('userLoginTag_'+ po_user_id, 'login');function getCookie(){var name = "processon_userKey=";
+var ca = document.cookie.split(';');for(var i=0, len = ca.length; i < len; i++){var c = ca[i].trim();if (c.indexOf(name) == 0){return c.substring(name.length,c.length);};}return "";}
+function removeLoginTag(){for(var key in localStorage){if(key.indexOf('userLoginTag') > -1){localStorage.removeItem(key)}}}})();
+window.poCollect = function(name, paramObj){if(!name || typeof paramObj != 'object'){return}
+//zhuge shijian
+/*    console.log(name,':',paramObj) */
+zhuge.track(name, paramObj);
+}
+	</script>
+	<link type="text/css" rel="stylesheet"
+		href="./static/datepicker-c8aec501.css">
+	<link type="text/css" rel="stylesheet"
+		href="./static/markdown-po-c8aec501.css">
+	<script main="true" src="./static/mind.min-c8aec501.js" charset="UTF-8"
+		type="text/javascript"></script>
+	<script src="./static/TCaptcha.js"></script>
+
+
+	<iframe src="./static/captcha-pre-verify.html"
+		style="width: 0px; height: 0px; display: none;"></iframe>
+	<iframe frameborder="0" scrolling="no"
+		style="background-color: transparent; border: 0px; display: none;"
+		src="./static/saved_resource.html"></iframe>
+	<div id="GOOGLE_INPUT_CHEXT_FLAG" input=""
+		input_stat="{&quot;tlang&quot;:true,&quot;tsbc&quot;:true,&quot;pun&quot;:true,&quot;mk&quot;:true,&quot;ss&quot;:true}"
+		style="display: none;"></div>
+	<div class="mind-canvas-con">
+		<div style="display: none;" class="mind-canvas">
+			<canvas width="250" height="107"></canvas>
+			<div class="viewport"
+				style="left: 115.14px; top: 51.8081px; width: 48.3971px; height: 24.9477px;"></div>
+		</div>
+		<div class="mind-canvas-op">
+			<span tit="full" title="全屏" title_pos="top" class="mind-icons"></span><span
+				title="显示视图导航" title_pos="top" tit="close"
+				style="vertical-align: -1px;" class="mind-icons active"></span><span
+				title="定位到中心主题" title_pos="top" tit="focus" class="mind-icons"></span><span
+				title="缩小" title_pos="top" tit="zoomout"
+				class="mind-icons mind-zoomout"></span><span title="放大"
+				title_pos="top" tit="zoomin" class="mind-icons mind-zoomin"></span><span
+				title_pos="top" title="还原" tit="zoomtext" class="mind-zoomtxt">100%</span>
+		</div>
+	</div>
+	<div id="mind_hover_tip"
+		style="left: 2019.67px; top: 47px; display: none;">
+		<div class="tip_arrow"></div>
+		<div class="tip_content">演示</div>
+	</div>
+	<audio id="audioId1" width="100" height="100" preload="metadata"></audio>
+	<audio id="audioId2" width="100" height="100" preload="metadata"></audio>
+</body>
+</html>
