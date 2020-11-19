@@ -24,5 +24,6 @@ RUN echo 'nohup node /node/proxy.js > /tmp/proxy.out 2>&1 &' >> /task.sh && \
 
 #docker build -t "land007/ytlm:latest" .
 #> docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t land007/ytlm --push .mingan
+#docker rm -f ytlm
 #docker run -it -p 3000:3001 -p 20022:20022 -e "username=gjxt" --restart=always --name ytlm land007/ytlm:latest
 #http://127.0.0.1:3000/index.html.html?name=abc

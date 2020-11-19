@@ -3547,14 +3547,14 @@ var mindUI = {
         if(confirm('你确定放弃当前修改吗?')) {
           if (a == "new") {//(mindUI.member || mindUI.usedFileCount < mindUI.fileCount) && 
               //window.location.href = "/mindmap/new?category=mind_right&status=private&team=" + teamId + "&org=" + orgId;
-        	  jsonp('./static/demo.js');
+        	  jsonp('./users/demo.js');
 //              saveInLocalStorage(data);
               //return
           }
           if (a == "clone") {//(mindUI.member || mindUI.usedFileCount < mindUI.fileCount) && 
               //window.location.href = "/mindmap/new?template=" + chartId + "&chart_title" + document.title + "&team=" + teamId + "&org=" + orgId;
         	//发起jsonp请求函数
-        	  jsonp('./static/data.js');
+        	  jsonp('./users/data.js');
 //              saveInLocalStorage(demo_ret);
               //return
           }

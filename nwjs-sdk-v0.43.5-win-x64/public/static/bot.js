@@ -214,3 +214,20 @@ var jsonp = function(url) {
   o.type="text/javascript";
   document.body.appendChild(o);       
 };
+var startRecognize = function () {
+  var data = loadFromLocalStorage();
+//  alert(JSON.stringify(data));
+  (async () => {
+	  const rawResponse = await fetch('./users/' + localStorageKey, {
+	    method: 'POST',
+	    headers: {
+	      'Accept': 'application/json',
+	      'Content-Type': 'application/json'
+	    },
+	    body: JSON.stringify(data)
+	  });
+	  const content = await rawResponse.json();
+	  alert('保存成功！');
+	  console.log(content);
+	})();
+};
