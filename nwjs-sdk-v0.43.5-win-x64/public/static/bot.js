@@ -181,7 +181,7 @@ var setDemoProject = function(ret) {
     saveInLocalStorage(demo_ret);
     window.location.href = window.location.href;
 };
-var localStorageKey = getQueryVariable('chartId')? getQueryVariable('chartId'): 'teamworkDemo';
+var localStorageKey = getQueryVariable('name')? getQueryVariable('name'): 'teamworkDemo';
 var loadFromLocalStorage = function() {
 	var ret;
 	if (localStorage) {
