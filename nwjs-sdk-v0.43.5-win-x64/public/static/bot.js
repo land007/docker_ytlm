@@ -181,8 +181,8 @@ var setDemoProject = function(ret) {
     saveInLocalStorage(demo_ret);
     window.location.href = window.location.href;
 };
-var localStorageKey = getQueryVariable('name')? getQueryVariable('name'): 'teamworkDemo';
-var loadFromLocalStorage = function() {
+var localStorageKey = getQueryVariable('name')? getQueryVariable('name'): 'global';
+var loadFromLocalStorage =  function() {
 	var ret;
 	if (localStorage) {
 		if (localStorage.getItem(localStorageKey)) {
@@ -193,9 +193,14 @@ var loadFromLocalStorage = function() {
 			}
 		}
 	}
+//	alert(JSON.stringify(ret));
 	if (!ret) {
-		ret = getDemoProject();
-		saveInLocalStorage(ret);
+//		ret = getDemoProject();
+		 jsonp('./users/' + localStorageKey).then(function(data) {
+//   		  console.log(data);
+   		  saveInLocalStorage(data);
+   		  window.location.href = window.location.href;
+   	  });
 	}
 	return ret;
 };
@@ -208,13 +213,32 @@ var saveInLocalStorage = function(ret, callback) {
 		}
 	}
 };
-var jsonp = function(url) {
-  var o = document.createElement("script"); 
-  o.src=url;
-  o.type="text/javascript";
-  document.body.appendChild(o);       
+//var jsonp = function(url) {
+//  var o = document.createElement("script"); 
+//  o.src=url;
+//  o.type="text/javascript";
+//  document.body.appendChild(o);       
+//};
+var jsonp = function (uri) {
+    return new Promise(function(resolve, reject) {
+        var id = '_' + Math.round(10000 * Math.random());
+//        var callbackName = 'jsonp_callback_' + id;
+        var callbackName = 'jsonp_callback_';
+        window[callbackName] = function(data) {
+            delete window[callbackName];
+            var ele = document.getElementById(id);
+            ele.parentNode.removeChild(ele);
+            resolve(data);
+        }
+        var src = uri + '?callback=' + callbackName;
+        var script = document.createElement('script');
+        script.src = src;
+        script.id = id;
+        script.addEventListener('error', reject);
+        (document.getElementsByTagName('head')[0] || document.body || document.documentElement).appendChild(script)
+    });
 };
-var startRecognize = function () {
+var updateLocalStorage = function () {
   var data = loadFromLocalStorage();
 //  alert(JSON.stringify(data));
   (async () => {

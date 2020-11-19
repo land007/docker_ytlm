@@ -1,4 +1,4 @@
-setDemoProject(
+jsonp_callback_(
 {
 	"id": "root",
 	"structure": "mind_free",

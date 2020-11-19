@@ -14,8 +14,8 @@ const userRoutes = (app, fs) => {
                     if (err) {
                         throw err;
                     }
-                    if(data.length > 'setDemoProject();'.length) {
-                        data = data.substring('setDemoProject('.length, data.length - ');'.length);
+                    if(data.length > 'jsonp_callback_();'.length) {
+                        data = data.substring('jsonp_callback_('.length, data.length - ');'.length);
                         console.log(data);
                         let _data = returnJson ? JSON.parse(data) : data;
                         callback(_data);
@@ -32,7 +32,7 @@ const userRoutes = (app, fs) => {
 
 //    const _writeFile = (fileData, callback, filePath = dataPath + dataFile + dataSuffix, encoding = 'utf8') => {
     const _writeFile = (fileData, callback, filePath, encoding = 'utf8') => {
-    	fileData = 'setDemoProject(' + fileData + ');';
+    	fileData = 'jsonp_callback_(' + fileData + ');';
         fs.writeFile(filePath, fileData, encoding, (err) => {
             if (err) {
                 throw err;
@@ -45,6 +45,7 @@ const userRoutes = (app, fs) => {
     app.get('/users/:userId', (req, res) => {
     	let userId = req.params["userId"];
     	_readFile(data => {
+    		data = 'jsonp_callback_(' + JSON.stringify(data) + ');';
     		res.send(data);
     	},
                 true, dataPath + userId + dataSuffix);
