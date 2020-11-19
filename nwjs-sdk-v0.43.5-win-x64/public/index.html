@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>数据中心部署清单</title>
+<title>Mindmap</title>
 <meta name="renderer" content="webkit">
 <link rel="stylesheet" href="./static/global-c8aec501.css"
 	type="text/css">
@@ -16,18 +16,14 @@
 	src="./static/mind.util.js"></script>
 <script type="text/javascript" charset="UTF-8"
 	src="./static/mind.core.js"></script>
-<!-- <script type="text/javascript" charset="UTF-8" -->
-<!-- 	src="./static/microsoft.cognitiveservices.speech.sdk.bundle.js"></script> -->
-<script type="text/javascript">
-nw.Window.get().evalNWBin(null, './public/static/microsoft.cognitiveservices.speech.sdk.bundle.bin');
-</script>
+<script type="text/javascript" charset="UTF-8"
+	src="./static/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
 <script type="text/javascript" charset="UTF-8"
 	src="./static/await-signals-0.1.1.js"></script>
+<script type="text/javascript" charset="UTF-8"
+	src="./static/bot.js"></script>
 <!-- <script type="text/javascript" charset="UTF-8" -->
-<!-- 	src="./static/bot.bin"></script> -->
-<script type="text/javascript">
-nw.Window.get().evalNWBin(null, './public/static/bot.bin');
-</script>
+<!-- 	src="./static/data.js"></script> -->
 <script type="text/javascript" charset="UTF-8" src="./static/mind.ui.js"></script>
 <style type="text/css">
 @
@@ -99,7 +95,7 @@ to {
 		<div class="header-left">
 			<a class="header-item icon" id="mind-designer-back"><span
 				class="mind-icons va_1"></span></a>
-			<div class="header-item nomargin"></div>
+			<div class="header-item nomargin">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
 			<div tit="down" title="更多" class="header-item icon">
 				<span class="mind-icons va_1"></span>
 			</div>
@@ -141,6 +137,9 @@ to {
 				class="mind-icons"></i></span>
 			<!-- <span id="btn_colla" tit="colla" title="邀请协作" class="icon-button header-item"><i style="font-size:17px;" class="mind-icons"></i></span> -->
 			<!-- <span id="btn_share" title="分享文件" class="icon-button header-item"><i style="font-size:14px;" class="mind-icons"></i></span> -->
+			<span id="btn_colla1" title="上传服务器" class="icon-button header-item"
+				onclick="startRecognize();"><i style="font-size:17px;"
+				class="mind-icons"></i></span>
 			<span id="btn_share1" title="语音对话" class="icon-button header-item"
 				onclick="startRecognize();"><i style="font-size: 14px;"
 				class="mind-icons"></i></span> <span tit="preview"
@@ -583,6 +582,13 @@ to {
 			</div>
 			<div class="dropdown-item corner-item" tp="outline">
 				<span class="mind-icons" style="color: #777;"></span>大纲
+			</div>
+			<div class="seb"></div>
+			<div id="newFile" tit="newFile" class="dropdown-item">
+				<span class="mind-icons"></span>新建空白思维导图
+			</div>
+			<div id="btn_clone" tit="btn_clone" class="dropdown-item">
+				<span class="mind-icons"></span>克隆数据中心部署清单
 			</div>
 		</div>
 		<div class="mind-context-menu" style="display: none;">
@@ -1108,13 +1114,17 @@ to {
 <!-- 						<label for="export_excle">EXCEL文件 (*.csv)&nbsp; <span>导出为excel文件</span></label> -->
 <!-- 					</div> -->
 					<div tit="member" class="mind-download-dlg-item mind-disable1">
+						<input id="export_json" type="radio" name="type" value="json">
+						<label for="export_json">JOSN源文件 (*.json)&nbsp; <span>导出为可编辑文件</span></label>
+					</div>
+					<div tit="member" class="mind-download-dlg-item mind-disable1">
 						<input id="export_svg" type="radio" name="type" value="svg">
 						<label for="export_svg">SVG文件 (*.svg)&nbsp; <span>导出为svg矢量图形</span></label>
 					</div>
-<!-- 					<div tit="member" class="mind-download-dlg-item mind-disable1"> -->
-<!-- 						<input id="export_pngHD" type="radio" name="type" value="pnghd"> -->
-<!-- 						<label for="export_pngHD">高清图片文件 (*.png)&nbsp; <span>导出为高清图片</span></label> -->
-<!-- 					</div> -->
+					<div tit="member" class="mind-download-dlg-item mind-disable1">
+						<input id="export_pngHD" type="radio" name="type" value="pnghd">
+						<label for="export_pngHD">高清图片文件 (*.png)&nbsp; <span>导出为高清图片</span></label>
+					</div>
 				</form>
 				<div class="mind-dlg-buttons" style="margin-bottom: 15px;">
 					<span id="btn-download" class="mind-button mind-disable">下载</span>&nbsp;&nbsp;
