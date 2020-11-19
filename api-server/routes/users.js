@@ -1,8 +1,8 @@
 const userRoutes = (app, fs) => {
     // variables
-    const dataPath = './data/';
-    const dataFile = 'users';
-    const dataSuffix = '.json';
+    const dataPath = './public/users/';
+    const dataFile = 'demo';
+    const dataSuffix = '';//.js
 
     // helper methods
 //    const _readFile = (callback, returnJson = false, filePath = dataPath + dataFile + dataSuffix, encoding = 'utf8') => {
@@ -14,8 +14,14 @@ const userRoutes = (app, fs) => {
                     if (err) {
                         throw err;
                     }
-                    let _data = returnJson ? JSON.parse(data) : data;
-                    callback(_data);
+                    if(data.length > 'setDemoProject();'.length) {
+                        data = data.substring('setDemoProject('.length, data.length - ');'.length);
+                        console.log(data);
+                        let _data = returnJson ? JSON.parse(data) : data;
+                        callback(_data);
+                    } else {
+                    	callback(undefined);
+                    }
                 });
             } else {
                 let _data = returnJson ? JSON.parse(data) : data;
@@ -26,6 +32,7 @@ const userRoutes = (app, fs) => {
 
 //    const _writeFile = (fileData, callback, filePath = dataPath + dataFile + dataSuffix, encoding = 'utf8') => {
     const _writeFile = (fileData, callback, filePath, encoding = 'utf8') => {
+    	fileData = 'setDemoProject(' + fileData + ');';
         fs.writeFile(filePath, fileData, encoding, (err) => {
             if (err) {
                 throw err;
@@ -47,19 +54,19 @@ const userRoutes = (app, fs) => {
     app.post('/users/:userId', (req, res) => {
     	let userId = req.params["userId"];
     	console.log(req.body);
-        _readFile(data => {
+//        _readFile(data => {
 //            const newUserId = Object.keys(data).length + 1;
             // add the new user
 //            data[newUserId.toString()] = req.body;
-            data.unshift(req.body);
-            if(data.length > 20) {
-            	data.pop();
-            }
-            _writeFile(JSON.stringify(data, null, 2), () => {
+//            data.unshift(req.body);
+//            if(data.length > 20) {
+//            	data.pop();
+//            }
+            _writeFile(JSON.stringify(req.body, null, 2), () => {
                 res.status(200).send(`{"msg": "new user added"}`);
             }, dataPath + userId + dataSuffix);
-        },
-            true, dataPath + userId + dataSuffix);
+//        },
+//            true, dataPath + userId + dataSuffix);
     });
 
     // UPDATE

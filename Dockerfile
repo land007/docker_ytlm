@@ -4,7 +4,6 @@ MAINTAINER Jia Yiqiu <yiqiujia@hotmail.com>
 
 RUN . $HOME/.nvm/nvm.sh && cd / && npm install body-parser express http-proxy basic-auth
 
-ADD api-server/data /node_/data
 ADD nwjs-sdk-v0.43.5-win-x64/public /node_/public
 ADD api-server/routes /node_/routes
 ADD api-server/server.js /node_/
