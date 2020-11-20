@@ -19,10 +19,15 @@ RUN sed -i 's/\r$//' /*.sh ; chmod +x /*.sh && \
 	echo "land007/ytlm" > /.image_name
 
 RUN echo 'nohup node /node/proxy.js > /tmp/proxy.out 2>&1 &' >> /task.sh && \
-	echo 'node /node/src-gen/backend/main.js /home/project --hostname=0.0.0.0 --startup-timeout=-1 --inspect=0.0.0.0:9229' >> /start.sh
+	mv /node_/public/users /data && ln -s /data /node_/public/users && \
+	mv /data /data_ && echo "/check.sh /data" >> /task.sh
+VOLUME ["/data"]
+
+#	echo 'node /node/src-gen/backend/main.js /home/project --hostname=0.0.0.0 --startup-timeout=-1 --inspect=0.0.0.0:9229' >> /start.sh
 
 #docker build -t "land007/ytlm:latest" .
 #> docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t land007/ytlm --push .mingan
 #docker rm -f ytlm
 #docker run -it -p 3000:3001 -p 20022:20022 -e "username=gjxt" --restart=always --name ytlm land007/ytlm:latest
+#docker run -it -p 3000:3001 -p 20022:20022 -e "username=gjxt" -v ~/docker/ytlm/data:/data --restart=always --name ytlm land007/ytlm:latest
 #http://127.0.0.1:3000/index.html.html?name=abc
