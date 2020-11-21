@@ -26,7 +26,7 @@ VOLUME ["/data"]
 #	echo 'node /node/src-gen/backend/main.js /home/project --hostname=0.0.0.0 --startup-timeout=-1 --inspect=0.0.0.0:9229' >> /start.sh
 
 #docker build -t "land007/ytlm:latest" .
-#> docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t land007/ytlm --push .mingan
+#> docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t land007/ytlm --push .
 #docker rm -f ytlm
 #docker run -it -p 3000:3001 -p 20022:20022 -e "username=gjxt" --restart=always --name ytlm land007/ytlm:latest
 #docker run -it -p 3000:3001 -p 20022:20022 -e "username=gjxt" -v ~/docker/ytlm/data:/data --restart=always --name ytlm land007/ytlm:latest
