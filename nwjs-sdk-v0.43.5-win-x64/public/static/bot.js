@@ -255,3 +255,22 @@ var updateLocalStorage = function () {
 	  console.log(content);
 	})();
 };
+var refreshLocalStorage = function () {
+	 jsonp('./users/' + localStorageKey).then(function(data) {
+//		  console.log(data);
+		  saveInLocalStorage(data);
+		  window.location.href = window.location.href;
+	  });
+};
+$(function(){
+	var keys = Object.keys(localStorage);
+	var mind_caidan = $("#mind_caidan")[0];
+	for(let k in keys) {
+		var key = keys[k];
+		var newNode = document.createElement("div");
+		newNode.innerHTML = '<div tit="btn_clone" class="dropdown-item" onclick="window.location.href=\'/?name=' + key + '\';">\
+				<span class="mind-icons" onclick="if(confirm(\'你确定要删除吗？\')){localStorage.removeItem(\'' + key + '\');window.location.href=\'/\';};window.event? window.event.cancelBubble = true : e.stopPropagation();">&#x2718;</span>' + key + '\
+			</div>';
+		mind_caidan.appendChild(newNode);
+	}
+});

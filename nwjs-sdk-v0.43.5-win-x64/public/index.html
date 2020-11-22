@@ -133,13 +133,16 @@ to {
 		</div>
 		<div class="header-right">
 			<span tit="download" class="icon-button header-item"
-				original-title="下载"><i style="font-size: 16px;"
+				original-title="导出"><i style="font-size: 16px;"
 				class="mind-icons"></i></span>
 			<!-- <span id="btn_colla" tit="colla" title="邀请协作" class="icon-button header-item"><i style="font-size:17px;" class="mind-icons"></i></span> -->
 			<!-- <span id="btn_share" title="分享文件" class="icon-button header-item"><i style="font-size:14px;" class="mind-icons"></i></span> -->
+			<span id="btn_colla1" title="覆盖本地" class="icon-button header-item"
+				onclick="refreshLocalStorage();"><i style="font-size:17px;"
+				class="mind-icons">&#x21af;</i></span>
 			<span id="btn_colla1" title="上传服务器" class="icon-button header-item"
 				onclick="updateLocalStorage();"><i style="font-size:17px;"
-				class="mind-icons"></i></span>
+				class="mind-icons"></i></span>
 			<span id="btn_share1" title="语音对话" class="icon-button header-item"
 				onclick="startRecognize();"><i style="font-size: 14px;"
 				class="mind-icons"></i></span> <span tit="preview"
@@ -576,7 +579,7 @@ to {
 				<span class="mind-icons"></span> 退出
 			</a>
 		</div>
-		<div class="mind-title-menu mind-dropdown" style="z-index: -1;">
+		<div id="mind_caidan" class="mind-title-menu mind-dropdown" style="z-index: -1;">
 			<div class="dropdown-item corner-item" tp="history">
 				<span class="mind-icons"></span>历史版本
 			</div>
@@ -585,7 +588,7 @@ to {
 			</div>
 			<div class="seb"></div>
 			<div id="newFile" tit="newFile" class="dropdown-item">
-				<span class="mind-icons"></span>新建空白思维导图
+				<span class="mind-icons"></span>新建示例思维导图
 			</div>
 			<div id="btn_clone" tit="btn_clone" class="dropdown-item">
 				<span class="mind-icons"></span>克隆数据中心部署清单
@@ -1052,7 +1055,7 @@ to {
 		</ul>
 		<div class="mind-download-dlg mind-dlg" style="display: none;">
 			<h3>
-				下载为<span class="mind-dlog-close mind-icons"></span>
+				导出为<span class="mind-dlog-close mind-icons"></span>
 			</h3>
 			<div class="mind-dlg-content">
 				<form id="export_form"
