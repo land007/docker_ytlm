@@ -269,7 +269,7 @@ $(function(){
 		var key = keys[k];
 		var newNode = document.createElement("div");
 		newNode.innerHTML = '<div tit="btn_clone" class="dropdown-item" onclick="window.location.href=\'/?name=' + key + '\';">\
-				<span class="mind-icons" onclick="if(confirm(\'你确定要删除吗？\')){localStorage.removeItem(\'' + key + '\');window.location.href=\'/\';};window.event? window.event.cancelBubble = true : e.stopPropagation();">&#x2718;</span>' + key + '\
+				<span class="mind-icons" onclick="if(confirm(\'你确定要删除吗？\')){localStorage.removeItem(\'' + key + '\');window.location.href=\'/\';};window.event? window.event.cancelBubble = true : e.stopPropagation();">&#x2718;</span>' + decodeURI(key) + '\
 			</div>';
 		mind_caidan.appendChild(newNode);
 	}
