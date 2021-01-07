@@ -2185,6 +2185,8 @@ header .header-right{
 	transform:scale(0.8);
 	transform-origin:center top;
 	padding:8px 0px;
+	overflow: scroll;
+    height: 80%;
 }
 .mind-dropdown.visible{
 	display:block !important;
