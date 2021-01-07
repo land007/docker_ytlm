@@ -3544,33 +3544,35 @@ var mindUI = {
     },
     createNew: function(a) {
         a = a || "new";
-        if(confirm('你确定放弃当前修改吗?')) {
           if (a == "new") {//(mindUI.member || mindUI.usedFileCount < mindUI.fileCount) && 
+        	  var name=prompt("请输入新图名字",""); // 弹出input框
               //window.location.href = "/mindmap/new?category=mind_right&status=private&team=" + teamId + "&org=" + orgId;
 //        	  jsonp('./users/demo');
-        	  jsonp('./users/demo').then(function(data) {
-//        		  console.log(data);
-        		  saveInLocalStorage(data);
-        		  window.location.href = window.location.href;
-        	  });
+        	  if(name != '') {
+            	  window.location.href = HREF + '?name=' + name;
+        	  } else {
+        		  alert('你没有输入任何名称');
+        	  }
 //              saveInLocalStorage(data);
               //return
-          }
-          if (a == "clone") {//(mindUI.member || mindUI.usedFileCount < mindUI.fileCount) && 
+          } else if (a == "clone") {//(mindUI.member || mindUI.usedFileCount < mindUI.fileCount) && 
               //window.location.href = "/mindmap/new?template=" + chartId + "&chart_title" + document.title + "&team=" + teamId + "&org=" + orgId;
         	//发起jsonp请求函数
 //        	  jsonp('./users/data');
-        	  jsonp('./users/data').then(function(data) {
-//        		  console.log(data);
-        		  saveInLocalStorage(data);
-        		  window.location.href = window.location.href;
-        	  });
+        	  if(confirm('警告！！！如果点击确认会清空所有修改。')) {
+//        		  jsonp('./users/data').then(function(data) {
+        		  saveBakInLocalStorage();
+	        	  jsonp('./users/demo').then(function(data) {
+//	        		  console.log(data);
+	        		  saveInLocalStorage(data);
+	        		  window.location.href = window.location.href;
+	        	  });
+        	  }
 //              saveInLocalStorage(demo_ret);
               //return
           }
 //          $("#mind-fileover-dlg").dialog()
 //            window.location.href = window.location.href;
-    	}
     },
     openFile: function(b) {
         if (chartId == b) {

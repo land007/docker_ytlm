@@ -213,6 +213,15 @@ var saveInLocalStorage = function(ret, callback) {
 		}
 	}
 };
+var saveBakInLocalStorage = function(callback) {
+	if (localStorage) {
+		let ret = JSON.parse(localStorage.getItem(localStorageKey));
+		localStorage.setItem(localStorageKey+'_bak', JSON.stringify(ret));
+		if(callback) {
+			callback();
+		}
+	}
+};
 //var jsonp = function(url) {
 //  var o = document.createElement("script"); 
 //  o.src=url;
@@ -262,14 +271,19 @@ var refreshLocalStorage = function () {
 		  window.location.href = window.location.href;
 	  });
 };
+var HREF = window.location.href;
+var HREF_INDEX = HREF.lastIndexOf('?');
+if(HREF_INDEX > 0) {
+	HREF = HREF.substring(0,HREF.lastIndexOf('?'));
+}
 $(function(){
 	var keys = Object.keys(localStorage);
 	var mind_caidan = $("#mind_caidan")[0];
 	for(let k in keys) {
 		var key = keys[k];
 		var newNode = document.createElement("div");
-		newNode.innerHTML = '<div tit="btn_clone" class="dropdown-item" onclick="window.location.href=\'/?name=' + key + '\';">\
-				<span class="mind-icons" onclick="if(confirm(\'你确定要删除吗？\')){localStorage.removeItem(\'' + key + '\');window.location.href=\'/\';};window.event? window.event.cancelBubble = true : e.stopPropagation();">&#x2718;</span>' + decodeURI(key) + '\
+		newNode.innerHTML = '<div tit="btn_clone" class="dropdown-item" onclick="window.location.href=\'' + HREF + '?name=' + key + '\';">\
+				<span class="mind-icons" onclick="if(confirm(\'你确定要删除吗？\')){localStorage.removeItem(\'' + key + '\');window.location.href=\'' + HREF + '\';};window.event? window.event.cancelBubble = true : e.stopPropagation();">&#x2718;</span>' + decodeURI(key) + '\
 			</div>';
 		mind_caidan.appendChild(newNode);
 	}
