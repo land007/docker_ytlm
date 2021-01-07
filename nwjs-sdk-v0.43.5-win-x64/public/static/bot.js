@@ -265,11 +265,14 @@ var updateLocalStorage = function () {
 	})();
 };
 var refreshLocalStorage = function () {
-	 jsonp('./users/' + localStorageKey).then(function(data) {
-//		  console.log(data);
-		  saveInLocalStorage(data);
-		  window.location.href = window.location.href;
-	  });
+	if(confirm('警告！！！如果点击确认会丢失当前修改。')) {
+		saveBakInLocalStorage();
+		jsonp('./users/' + localStorageKey).then(function(data) {
+//			  console.log(data);
+			  saveInLocalStorage(data);
+			  window.location.href = window.location.href;
+		  });
+	}
 };
 var HREF = window.location.href;
 var HREF_INDEX = HREF.lastIndexOf('?');
