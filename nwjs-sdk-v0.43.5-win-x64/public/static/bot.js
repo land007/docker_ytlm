@@ -56,6 +56,9 @@ var i = 0;
 var old_speak = undefined;
 var old_speak_timeout = undefined;
 var play_loop = function(speak) {
+	if(recognizer === undefined) {
+		return;
+	}
 //	console.log('i=' + i + ' signal1.state=' + signal1.state + ' signal2.state=' + signal2.state + ' speak=' + speak + ' speak_list=' + JSON.stringify(speak_list));
 	if(speak === undefined || speak == '') {
 		return;
