@@ -53,21 +53,40 @@ let signal2 = new Signal('end');
 var audio1;
 var audio2;
 var i = 0;
+var old_speak = undefined;
+var old_speak_timeout = undefined;
 var play_loop = function(speak) {
-	console.log('i=' + i + ' signal1.state=' + signal1.state + ' signal2.state=' + signal2.state + ' speak=' + speak + ' speak_list=' + JSON.stringify(speak_list));
+//	console.log('i=' + i + ' signal1.state=' + signal1.state + ' signal2.state=' + signal2.state + ' speak=' + speak + ' speak_list=' + JSON.stringify(speak_list));
 	if(speak === undefined || speak == '') {
 		return;
 	}
 	if(speak != null) {
 		speak = speak.replace(/<[^>]+>/g, ' ');
 	}
+//	console.log('speak', speak);
+	if(speak != null) {
+		if(old_speak !== undefined && old_speak == speak) {
+//			console.log('阻断');
+			return;
+		} else {
+			clearTimeout(old_speak_timeout)
+			old_speak = speak;
+			old_speak_timeout = setTimeout(() => {
+//				console.log('清空');
+				old_speak = undefined;;
+			}, 2000);
+		}
+	}
 	if(signal1.state == 'play' && signal2.state == 'play') {
+//		console.log('缓存');
 		speak_list.unshift(speak);
 		return;
 	}
 	if(speak == null) {
+//		console.log('取缓存');
 		speak = speak_list.pop();
 	}
+//	console.log('播放');
 	if(!(speak === undefined || speak == null || speak == '')) {
 		if(audio1 === undefined) {
 			audio1 = document.getElementById("audioId1");
@@ -135,7 +154,7 @@ var play_loop = function(speak) {
 //    	 		signal2 = new Signal('end');
 		}
 		i++;
-		console.log('i++');
+//		console.log('i++');
 	}
 };
 var mind = null, hash = window.location.hash, chartId = "5def526fe4b0dba2615703d9", tutorial = true, chartTitle = "数据中心部署清单", teamId = "", orgId = "", collaRole = "editor";
