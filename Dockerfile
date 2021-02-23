@@ -2,7 +2,7 @@ FROM land007/node:latest
 
 MAINTAINER Jia Yiqiu <yiqiujia@hotmail.com>
 
-RUN . $HOME/.nvm/nvm.sh && cd / && npm install body-parser express http-proxy basic-auth
+RUN . $HOME/.nvm/nvm.sh && cd / && $HOME/.nvm/versions/node/${SHIPPABLE_NODE_VERSION}/bin/node $HOME/.nvm/versions/node/${SHIPPABLE_NODE_VERSION}/lib/node_modules/npm/bin/npm-cli.js install body-parser express http-proxy basic-auth
 
 ADD nwjs-sdk-v0.43.5-win-x64/public /node_/public
 ADD api-server/routes /node_/routes
