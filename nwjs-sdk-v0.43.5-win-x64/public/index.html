@@ -1653,5 +1653,26 @@ zhuge.track(name, paramObj);
 	</div>
 	<audio id="audioId1" width="100" height="100" preload="metadata"></audio>
 	<audio id="audioId2" width="100" height="100" preload="metadata"></audio>
+	<script type="text/javascript">
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./static/sw-cache.js', {
+            scope: './'
+        }).then(function (registration) {
+            var serviceWorker;
+            if (registration.installing) {
+                serviceWorker = registration.installing;
+            } else if (registration.waiting) {
+                serviceWorker = registration.waiting;
+            } else if (registration.active) {
+                serviceWorker = registration.active;
+            }
+            if (serviceWorker) {
+                serviceWorker.addEventListener('statechange', function (e) {
+                });
+            }
+        }).catch (function (error) {
+        });
+    }
+    </script>
 </body>
 </html>
