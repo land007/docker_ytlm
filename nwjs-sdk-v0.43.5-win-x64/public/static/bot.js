@@ -273,17 +273,22 @@ var updateLocalStorage = function () {
   var data = loadFromLocalStorage();
 //  alert(JSON.stringify(data));
   (async () => {
-	  const rawResponse = await fetch('./users/' + localStorageKey, {
-	    method: 'POST',
-	    headers: {
-	      'Accept': 'application/json',
-	      'Content-Type': 'application/json'
-	    },
-	    body: JSON.stringify(data)
-	  });
-	  const content = await rawResponse.json();
-	  alert('保存成功！');
-	  console.log(content);
+	  try{
+		  const rawResponse = await fetch('./users/' + localStorageKey, {
+			    method: 'POST',
+			    headers: {
+			      'Accept': 'application/json',
+			      'Content-Type': 'application/json'
+			    },
+			    body: JSON.stringify(data)
+			  });
+			  const content = await rawResponse.json();
+			  alert('保存成功！');
+			  console.log(content);
+	  } catch (error) {
+//		  console.log(error);
+		  alert('你的网络开小差了，请稍后再试。');
+	  }
 	})();
 };
 var refreshLocalStorage = function () {
