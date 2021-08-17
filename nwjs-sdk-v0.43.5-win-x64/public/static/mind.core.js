@@ -5737,9 +5737,11 @@ mindDesigner.prototype.connection = {
         }
     },
     setConnectionD: function(l) {// 画曲线
-        //l.points = [{x: l.realStart.x + Math.abs(l.realStart.x - l.realEnd.x)/2, y: l.realStart.y}, {x: l.realEnd.x - Math.abs(l.realStart.x - l.realEnd.x)/2, y: l.realEnd.y}]
-        //l.points = [{x: l.realStart.x - Math.abs(l.realStart.x - l.realEnd.x)/2, y: l.realStart.y}, {x: l.realEnd.x + Math.abs(l.realStart.x - l.realEnd.x)/2, y: l.realEnd.y}]
-        l.points = [{x: l.realStart.x - (l.realStart.x - l.realEnd.x)/2, y: l.realStart.y}, {x: l.realEnd.x + (l.realStart.x - l.realEnd.x)/2, y: l.realEnd.y}]
+        if(!onClickCtrl) {
+        	//l.points = [{x: l.realStart.x + Math.abs(l.realStart.x - l.realEnd.x)/2, y: l.realStart.y}, {x: l.realEnd.x - Math.abs(l.realStart.x - l.realEnd.x)/2, y: l.realEnd.y}]
+        	//l.points = [{x: l.realStart.x - Math.abs(l.realStart.x - l.realEnd.x)/2, y: l.realStart.y}, {x: l.realEnd.x + Math.abs(l.realStart.x - l.realEnd.x)/2, y: l.realEnd.y}]
+        	//l.points = [{x: l.realStart.x - (l.realStart.x - l.realEnd.x)/2, y: l.realStart.y}, {x: l.realEnd.x + (l.realStart.x - l.realEnd.x)/2, y: l.realEnd.y}]
+        }
         var a = l.realStart
           , c = l.realEnd
           , k = l.points;
@@ -5970,34 +5972,41 @@ mindDesigner.prototype.connection = {
             k.start = i;
             var h = d.getPointInSVG(g, c, b);
             k.end = h;
-            if(b.x > c.x) {
-                i.x = 0
-            } else {
-                i.x = 1
+            if(!onClickCtrl) {
+            	if(b.x > c.x) {
+                	i.x = 0
+            	} else {
+                	i.x = 1
+            	}
+            	i.y = 0.5
             }
-            i.y = 0.5
             k.realStart = {
                 x: b.x - b.w / 2 + b.w * i.x,
                 y: b.y - b.h / 2 + b.h * i.y
             };
-            if(b.x > c.x) {
-                h.x = 1
-            } else {
-                h.x = 0
+            if(!onClickCtrl) {
+            	if(b.x > c.x) {
+                	h.x = 1
+            	} else {
+                	h.x = 0
+            	}
+            	h.y = 0.5
             }
-            h.y = 0.5
             k.realEnd = {
                 x: c.x - c.w / 2 + c.w * h.x,
                 y: c.y - c.h / 2 + c.h * h.y
             };
             //TODO jiayq
-            k.points = [{x: k.realStart.x - (k.realStart.x - k.realEnd.x)/2, y: k.realStart.y}, {x: k.realEnd.x + (k.realStart.x - k.realEnd.x)/2, y: k.realEnd.y}]
-        	k.angle = f.getAngle(k.points[1], k.realEnd);
-//            k.angle = f.getAngle(k.realStart, k.realEnd);
-//            if (k.points != null && k.points.length > 0) {
-//                k.points = [];
-//                k.pts = []
-//            }
+            if(!onClickCtrl) {
+            	k.points = [{x: k.realStart.x - (k.realStart.x - k.realEnd.x)/2, y: k.realStart.y}, {x: k.realEnd.x + (k.realStart.x - k.realEnd.x)/2, y: k.realEnd.y}]
+        		k.angle = f.getAngle(k.points[1], k.realEnd);
+        	} else {
+            	k.angle = f.getAngle(k.realStart, k.realEnd);
+            	if (k.points != null && k.points.length > 0) {
+                	k.points = [];
+                	k.pts = []
+            	}
+            }
             d.setConnectionD(k);
             d.renderArrow(g, k);
             d.hideOrShowConnectionText(k, "hide")
@@ -6034,7 +6043,9 @@ mindDesigner.prototype.connection = {
             } catch (s) {
                 continue
             }
-            m.points = [{x: m.realStart.x - (m.realStart.x - m.realEnd.x)/2, y: m.realStart.y}, {x: m.realEnd.x + (m.realStart.x - m.realEnd.x)/2, y: m.realEnd.y}]
+            if(!onClickCtrl) {
+            	//m.points = [{x: m.realStart.x - (m.realStart.x - m.realEnd.x)/2, y: m.realStart.y}, {x: m.realEnd.x + (m.realStart.x - m.realEnd.x)/2, y: m.realEnd.y}]
+            }
             var q = m.points
               , i = {
                 x: t.x - t.w / 2 + m.start.x * t.w,
@@ -6048,15 +6059,17 @@ mindDesigner.prototype.connection = {
             m.realEnd = d;
             if (q != null && q.length > 0) {
                 var v = m.pts;
-                if (v.length == 0) {} else {
-                    q[0] = {
-                        x: v[0].x + t.x,
-                        y: v[0].y + t.y
-                    };
-                    q[1] = {
-                        x: v[1].x + h.x,
-                        y: v[1].y + h.y
-                    }
+                if(v) {
+                	if (v.length == 0) {} else {
+                    	q[0] = {
+                        	x: v[0].x + t.x,
+                        	y: v[0].y + t.y
+                    	};
+                    	q[1] = {
+                        	x: v[1].x + h.x,
+                        	y: v[1].y + h.y
+                    	}
+                	}
                 }
             }
             var n = {};
@@ -6162,17 +6175,21 @@ mindDesigner.prototype.connection = {
             n.realEnd = u;
             var e = h.getPointInSVG(j, t, u);
             n.start = e;
-            if(t.x > u.x) {
-            	e.x = 0;
-            } else {
-            	e.x = 1;
+            if(!onClickCtrl) {
+            	if(t.x > u.x) {
+            		e.x = 0;
+            	} else {
+            		e.x = 1;
+            	}
+            	e.y = 0.5;
             }
-            e.y = 0.5;
             n.realStart = {
                 x: t.x - t.w / 2 + t.w * e.x,
                 y: t.y - t.h / 2 + t.h * e.y
             };
-            n.points = [{x: n.realStart.x - (n.realStart.x - n.realEnd.x)/2, y: n.realStart.y}, {x: n.realEnd.x + (n.realStart.x - n.realEnd.x)/2, y: n.realEnd.y}]
+            if(!onClickCtrl) {
+            	n.points = [{x: n.realStart.x - (n.realStart.x - n.realEnd.x)/2, y: n.realStart.y}, {x: n.realEnd.x + (n.realStart.x - n.realEnd.x)/2, y: n.realEnd.y}]
+        	}
         	h.setConnectionD(n)
         });
         j.designer.off("mouseup.connection").on("mouseup.connection", function(y) {// 放手
@@ -6203,21 +6220,26 @@ mindDesigner.prototype.connection = {
                 var u = b.getTopicRealPos.call(j, e);
                 u.x += u.w / 2;
                 var z = h.getPointInSVG(j, u, t);
-            	if(t.x > u.x) {
-            		z.x = 1;
-            	} else {
-            		z.x = 0;
-            	}
-                z.y = 0.5;
+                if(!onClickCtrl) {
+            		if(t.x > u.x) {
+            			z.x = 1;
+            		} else {
+            			z.x = 0;
+            		}
+                	z.y = 0.5;
+                }
                 n.end = z;
                 n.realEnd = {
                     x: u.x - u.w / 2 + u.w * z.x,
                     y: u.y - u.h / 2 + u.h * z.y
                 };
-                n.points = [{x: n.realStart.x - (n.realStart.x - n.realEnd.x)/2, y: n.realStart.y}, {x: n.realEnd.x + (n.realStart.x - n.realEnd.x)/2, y: n.realEnd.y}]
-        		n.angle = b.getAngle(n.points[1], n.realEnd);
-                //n.angle = b.getAngle(n.realStart, n.realEnd);
-                //n.points = [];
+                if(!onClickCtrl) {
+                	n.points = [{x: n.realStart.x - (n.realStart.x - n.realEnd.x)/2, y: n.realStart.y}, {x: n.realEnd.x + (n.realStart.x - n.realEnd.x)/2, y: n.realEnd.y}]
+        			n.angle = b.getAngle(n.points[1], n.realEnd);
+        		} else {
+                	n.angle = b.getAngle(n.realStart, n.realEnd);
+                	n.points = [];
+                }
                 h.currentLine = n;
                 h.setConnectionD(n);
                 h.renderArrow(j, n);
@@ -6240,12 +6262,10 @@ mindDesigner.prototype.connection = {
           , a = m.angle
           , i = l.lineType
           , e = l.lineWidth;
-        console.log('m', m);
-        console.log('l', l);
+        console.log('a', a);
         var k = f.util.getArrowPoints(a, b, e);
         var h = [];
         h.push("M" + b.x + " " + b.y);
-        console.log('k', k);
         switch (l.lineArrow) {
         case "1":
             h.push("L" + k.x1 + " " + k.y1);
@@ -6554,13 +6574,11 @@ mindDesigner.prototype.connection = {
             }
             l.stopPropagation()
         })
-        $(".mind-connection-menu").find(".mind-button:nth-child(2)").off().on("click", function(l) {
-            if (a.currentLine) {
-                alert(1);
-                a.levelizationConnection(h, e)
-            }
-            l.stopPropagation()
-        })
+        //$(".mind-connection-menu").find(".mind-button:nth-child(2)").off().on("click", function(l) {
+        //    if (a.currentLine) {
+        //        alert(1);
+        //    }
+        //})
     },
     setSVGPos: function(e, a, b) {
         var c = {}
@@ -6998,9 +7016,6 @@ mindDesigner.prototype.connection = {
     },
     deleteConnection: function(b, a) {
         this.deleteConnectionMulti(b, [a])
-    },
-    levelizationConnection: function(b, a) {
-
     },
     deleteConnectionMulti: function(f, b, a) {
         if (b.length == 0) {

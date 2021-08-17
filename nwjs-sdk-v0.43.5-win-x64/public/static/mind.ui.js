@@ -493,7 +493,7 @@ $(document).ready(function() {
         //window.location.href = "/diagraming/back?id=" + chartId
     	if(confirm('你确定关闭窗口吗?')) {
     		var win = nw.Window.get();
-    		win.close(); 
+    		win.close();
     	}
     });
     $("#mind-help").on("click", function() {
@@ -1450,6 +1450,9 @@ var mindColla = {
             client: a,
             fullName: fullName
         };
+        console.log('c', c);
+
+        socket.emit('chat message', c);
         //TODO jiayq 不存拆解对象，保存全部对象
         console.log('all_data', mind.model.topic);
         saveInLocalStorage(mind.model.topic, function(){
@@ -1733,50 +1736,57 @@ var mindColla = {
             subject: chartId,
             client: a,
             uk: b
-        }, function(g) {
-            var h = g.users;
-            if (h == null) {
-                return
+        }, mindColla.callback_io)
+    },
+    callback_io: function(g) {
+        var h = g.users;
+        // if (h == null) {
+        //     return
+        // }
+        // if (h.length > 1 && mindColla.collaUserCount != h.length) {
+        //     window.clearInterval(mindColla.collaItv);
+        //     mindColla.collaItv = null;
+        //     mindColla.collaItv = window.setInterval(mindColla.poll, mindColla.collaPollTime)
+        // } else {
+        //     if (h.length == 1) {
+        //         window.clearInterval(mindColla.collaItv);
+        //         mindColla.collaItv = null;
+        //         mindColla.collaItv = window.setInterval(mindColla.poll, mindColla.collaPollTimeSingle)
+        //     }
+        // }
+        // mindColla.collaUserCount = h.length;
+        // mindColla.renderUsers(h);
+        // var f = g.msgs;
+        //TODO jiayq
+        var a = mindColla.collaClient
+          , b = mindColla.collaUk;
+        g.msg = JSON.parse(g.msgStr);
+        var f = [JSON.stringify(g)];
+        for (var e = 0; e < f.length; e++) {
+            var c = JSON.parse(f[e]);
+            if (c.client == a) {
+                continue
             }
-            if (h.length > 1 && mindColla.collaUserCount != h.length) {
-                window.clearInterval(mindColla.collaItv);
-                mindColla.collaItv = null;
-                mindColla.collaItv = window.setInterval(mindColla.poll, mindColla.collaPollTime)
-            } else {
-                if (h.length == 1) {
-                    window.clearInterval(mindColla.collaItv);
-                    mindColla.collaItv = null;
-                    mindColla.collaItv = window.setInterval(mindColla.poll, mindColla.collaPollTimeSingle)
+            if (c.msg != null && c.msg.length > 0) {
+                var j = c.msg[0];
+                if (j != null && "disable" == j.action) {
+                    mindColla.stop();
+                    mindColla.renderOff("focus");
+                    mind.operation.setDisable.call(mind);
+                    break
+                } else {
+                    if (j != null && "focus" == j.action) {}
                 }
             }
-            mindColla.collaUserCount = h.length;
-            mindColla.renderUsers(h);
-            var f = g.msgs;
-            for (var e = 0; e < f.length; e++) {
-                var c = JSON.parse(f[e]);
-                if (c.client == a) {
-                    continue
-                }
-                if (c.msg != null && c.msg.length > 0) {
-                    var j = c.msg[0];
-                    if (j != null && "disable" == j.action) {
-                        mindColla.stop();
-                        mindColla.renderOff("focus");
-                        mind.operation.setDisable.call(mind);
-                        break
-                    } else {
-                        if (j != null && "focus" == j.action) {}
-                    }
-                }
-                try {
-                    mind.messageSource.excuteMsgDirect.call(mind, c, function(k, i) {
-                        mindColla.showUserOp(k, i)
-                    })
-                } catch (d) {
-                    continue
-                }
+            try {
+                mind.messageSource.excuteMsgDirect.call(mind, c, function(k, i) {
+                    mindColla.showUserOp(k, i)
+                })
+            } catch (d) {
+                console.log(d);
+                continue
             }
-        })
+        }
     },
     saveVersion: function(c) {
         var f = userName;
@@ -2744,7 +2754,7 @@ var mindUI = {
 				}
 			};
 		jj(data);
-		
+
     },
     savePublish: function(f) {
         var b = $("#publish_category").val();
@@ -3544,7 +3554,7 @@ var mindUI = {
     },
     createNew: function(a) {
         a = a || "new";
-          if (a == "new") {//(mindUI.member || mindUI.usedFileCount < mindUI.fileCount) && 
+          if (a == "new") {//(mindUI.member || mindUI.usedFileCount < mindUI.fileCount) &&
         	  var name=prompt("请输入新图名字",""); // 弹出input框
               //window.location.href = "/mindmap/new?category=mind_right&status=private&team=" + teamId + "&org=" + orgId;
 //        	  jsonp('./users/demo');
@@ -3555,7 +3565,7 @@ var mindUI = {
         	  }
 //              saveInLocalStorage(data);
               //return
-          } else if (a == "clone") {//(mindUI.member || mindUI.usedFileCount < mindUI.fileCount) && 
+          } else if (a == "clone") {//(mindUI.member || mindUI.usedFileCount < mindUI.fileCount) &&
               //window.location.href = "/mindmap/new?template=" + chartId + "&chart_title" + document.title + "&team=" + teamId + "&org=" + orgId;
         	//发起jsonp请求函数
 //        	  jsonp('./users/data');
@@ -5018,7 +5028,7 @@ var Outline = {
             if (g.target.className == "node-title" || $(g.target).parents(".node-title").length > 0) {
                 var h = b.getAttribute("id").replace("ol_", "").replace("search_", "");
                 var f = Outline.util.getParentId(h);
-                
+
                 //置灰
 				$(".topic-box").removeClass("mind-slide-disable");
 				var p = $("g").children("path");
@@ -5073,8 +5083,8 @@ var Outline = {
 			        });
 		        	reduction_list(hh);
 		        }
-                
-                
+
+
                 mind.model.showTopics.call(mind, f, true);
                 mind.util.selectById.call(mind, h)
             }

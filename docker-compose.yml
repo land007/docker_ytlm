@@ -1,0 +1,92 @@
+version: "2.1"
+networks:
+  internal_network:
+services:
+  ytlm:
+    restart: always
+    networks:
+      - internal_network
+    image: land007/ytlm:latest
+    container_name: ytlm
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "300k"
+        max-file: "3"
+    volumes:
+      - ~/docker/ytlm/data:/data
+      - ~/docker/ytlm/node:/node
+    expose:
+      - "20022"
+      - "3001"
+      - "80"
+#    ports:
+#      - "27072:20022"
+#      - "9091:3001"
+  ytlm_node:
+    restart: always
+    networks:
+      - internal_network
+    image: land007/node:latest
+    container_name: ytlm_node
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "300k"
+        max-file: "3"
+#    stdin_open: true
+#    tty: true
+    volumes:
+      - ~/docker/ytlm_node:/node
+    expose:
+      - "80"
+      - "20022"
+#    ports:
+#      - "20080:80"
+#      - "20022:20022"
+  ytlm_http-proxy:
+    restart: always
+    networks:
+      - internal_network
+    links:
+      - ytlm
+    image: land007/http-proxy:latest
+    container_name: ytlm_http-proxy
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "300k"
+        max-file: "3"
+    volumes:
+      - ~/docker/ytlm_http-proxy:/node
+    environment:
+      - "password="
+      - "usernames=,,,,"
+      - "passwords=,,,,"
+      - "DOMAIN_NAME=docx.qhkly.com"
+      - "http_proxy_protocols=http:,http:,http:,http:,http:"
+      - "http_proxy_domains=docx.qhkly.com:9090,docx.qhkly.com:9090,docx.qhkly.com:9090,docx.qhkly.com:9090,docx.qhkly.com:9090"
+      - "http_proxy_paths=/users/gjxt_,/users/msa_,/users/jiayq_,/socket.io/,/"
+      - "http_proxy_hosts=ytlm,ytlm,ytlm,node,ytlm"
+      - "http_proxy_ports=3001,3001,3001,80,3001"
+      - "http_proxy_pretends=true,true,true,true,true"
+      - "ws_proxy_protocols=ws:"
+      - "ws_proxy_domains="
+      - "ws_proxy_paths=/socket.io/"
+      - "ws_proxy_hosts=node"
+      - "ws_proxy_ports=80"
+    expose:
+      - "20022"
+      - "443"
+      - "80"
+    ports:
+      - "9090:443"
+#unset ${!DOCKER_*}
+#sudo docker-compose up -d --remove-orphans
+#sudo docker-compose down

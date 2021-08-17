@@ -93,7 +93,7 @@ var play_loop = function(speak) {
 	if(!(speak === undefined || speak == null || speak == '')) {
 		if(audio1 === undefined) {
 			audio1 = document.getElementById("audioId1");
-			audio1.addEventListener("ended",function(){  
+			audio1.addEventListener("ended",function(){
 			    signal1.state = 'end';
 			    play_loop(null);
 			});
@@ -104,7 +104,7 @@ var play_loop = function(speak) {
 		}
 		if(audio2 === undefined) {
 			audio2 = document.getElementById("audioId2");
-			audio2.addEventListener("ended",function(){  
+			audio2.addEventListener("ended",function(){
 			    signal2.state = 'end';
 			    play_loop(null);
 			});
@@ -170,7 +170,7 @@ var showCanvas = "false";
 var exit = function() {
 	if(confirm('你确定关闭窗口吗?')) {
 		var win = nw.Window.get();
-		win.close(); 
+		win.close();
 	}
 };
 var minimize = function() {
@@ -178,7 +178,7 @@ var minimize = function() {
 	win.minimize();//会闪烁重新加载
 };
 var empty = function() {
-	
+
 };
 var loadFile = function(fileName, content) {
 	var aLink = document.createElement('a');
@@ -204,6 +204,28 @@ var setDemoProject = function(ret) {
     window.location.href = window.location.href;
 };
 var localStorageKey = getQueryVariable('name')? getQueryVariable('name'): 'global';
+var room = localStorageKey;//'global';//cached
+var options = {
+    rememberUpgrade:true,
+    transports: ['websocket'],
+    secure:true,
+    rejectUnauthorized: false
+}
+var socket = io('',options);
+// socket.on('event_name', function(msg){
+//     console.log('msg', msg);
+// });
+socket.on('chat message', function(g){
+    console.log('msg', g);
+    mindColla.callback_io(g);
+});
+// socket.on('chat message', function(msg){
+//     console.log('msg', msg);
+// });
+socket.on('get room', function (data) {
+    console.log('get room：' + JSON.stringify(data));
+    socket.emit('subscribe', { room: room });
+});
 var loadFromLocalStorage =  function() {
 	var ret;
 	if (localStorage) {
@@ -245,10 +267,10 @@ var saveBakInLocalStorage = function(callback) {
 	}
 };
 //var jsonp = function(url) {
-//  var o = document.createElement("script"); 
+//  var o = document.createElement("script");
 //  o.src=url;
 //  o.type="text/javascript";
-//  document.body.appendChild(o);       
+//  document.body.appendChild(o);
 //};
 var jsonp = function (uri) {
     return new Promise(function(resolve, reject) {
@@ -318,3 +340,43 @@ $(function(){
 		mind_caidan.appendChild(newNode);
 	}
 });
+var onClickCtrl = false;
+var onClickCtrlTimeout = undefined;
+window.onload = function () {
+    /**
+        * 键盘事件不能绑定div，一般绑定给容易获取焦点的对象 eg：input
+        * onkeydown
+        *      - 按下按键,如果一直按着会一直触发
+        *      - 连续触发时，第一次和第二次间隔稍微长，以后就非常快
+        * onkeyup  松开按键，只会触发一次
+        */
+    document.onkeydown = function (event) {
+        event = event || window.event;
+        /**
+            * 通过keyCode属性返回的ASCII编码来判断按下的按键，注意区分大小写
+            * 事件单独提供了ctrlkey shiftkey altkey 用来判断ctrl、shift、alt是否被按下，
+            * 被按下时返回true
+            */
+        if (event.ctrlKey) {
+            // console.log("我按下了ctrl");
+            onClickCtrl = true;
+            if(onClickCtrlTimeout) {
+                clearTimeout(onClickCtrlTimeout);
+            }
+            onClickCtrlTimeout = setTimeout(function() {
+                onClickCtrl = false;
+                onClickCtrlTimeout = undefined;
+                // console.log("我松开了ctrl");
+            }, 1000);
+        }
+        //if (event.keyCode ===  89 && event.altKey){
+        //    console.log("我按下了y和 Alt")
+        //}
+        //当文本框返回一个return false 取消默认行为时，文本框不再显示输入内容
+        /* *
+        *test.onkeydown = function () {
+        *  return false;
+        * };
+        */
+    };
+};
