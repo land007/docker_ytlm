@@ -3,6 +3,127 @@
 var authorizationToken;
 var SpeechSDK;
 var recognizer;
+var IndexedDBManager = (function() {
+  var db = null;
+  var dbName = 'myDatabase';
+  var dbVersion = 1;
+
+  var openDB = function() {
+    return new Promise(function(resolve, reject) {
+      var openRequest = indexedDB.open(dbName, dbVersion);
+
+      openRequest.onupgradeneeded = function(event) {
+        db = event.target.result;
+        db.createObjectStore('myObjectStore');
+      };
+
+      openRequest.onsuccess = function(event) {
+        db = event.target.result;
+        resolve();
+      };
+
+      openRequest.onerror = function(event) {
+        console.log('打开数据库失败：', event.target.error);
+        reject(event.target.error);
+      };
+    });
+  };
+
+  var saveData = function(key, data) {
+    return new Promise(function(resolve, reject) {
+      var transaction = db.transaction(['myObjectStore'], 'readwrite');
+      var objectStore = transaction.objectStore('myObjectStore');
+
+      var request = objectStore.put(data, key);
+      request.onsuccess = function(event) {
+        resolve();
+      };
+
+      request.onerror = function(event) {
+        console.log('存储失败：', event.target.error);
+        reject(event.target.error);
+      };
+    });
+  };
+
+  var getData = function(key) {
+    return new Promise(function(resolve, reject) {
+      var transaction = db.transaction(['myObjectStore'], 'readonly');
+      var objectStore = transaction.objectStore('myObjectStore');
+
+      var request = objectStore.get(key);
+      request.onsuccess = function(event) {
+        var data = event.target.result;
+        resolve(data);
+      };
+
+      request.onerror = function(event) {
+        console.log('查询失败：', event.target.error);
+        reject(event.target.error);
+      };
+    });
+  };
+
+  var deleteData = function(key) {
+    return new Promise(function(resolve, reject) {
+      var transaction = db.transaction(['myObjectStore'], 'readwrite');
+      var objectStore = transaction.objectStore('myObjectStore');
+
+      var request = objectStore.delete(key);
+      request.onsuccess = function(event) {
+        resolve();
+      };
+
+      request.onerror = function(event) {
+        console.log('删除失败：', event.target.error);
+        reject(event.target.error);
+      };
+    });
+  };
+
+  return {
+    saveDataToIndexedDB: async function(key, data) {
+      await openDB();
+      await saveData(key, data);
+    },
+
+    getDataFromIndexedDB: async function(key) {
+      await openDB();
+      return await getData(key);
+    },
+
+    deleteDataFromIndexedDB: async function(key) {
+      await openDB();
+      await deleteData(key);
+    }
+  };
+})();
+
+// async function testIndexedDBManager() {
+//   try {
+//     // 存储数据到 IndexedDB
+//     await IndexedDBManager.saveDataToIndexedDB('myKey', { foo: 'bar' });
+//     console.log('数据存储成功');
+
+//     // 从 IndexedDB 获取数据
+//     const data = await IndexedDBManager.getDataFromIndexedDB('myKey');
+//     if (data) {
+//       console.log('从 IndexedDB 获取到的数据：', data);
+//     } else {
+//       console.log('在 IndexedDB 中找不到指定的数据');
+//     }
+
+//     // 从 IndexedDB 删除数据
+//     await IndexedDBManager.deleteDataFromIndexedDB('myKey');
+//     console.log('数据删除成功');
+//   } catch (error) {
+//     console.log('发生错误：', error);
+//   }
+// }
+
+// testIndexedDBManager();
+
+
 var getQueryVariable = function(variable) {
    var query = window.location.search.substring(1);
    var vars = query.split("&");
@@ -191,18 +312,24 @@ var loadFile = function(fileName, content) {
 	aLink.click();
 	URL.revokeObjectURL(blob);
 };
-var getDef = function(a) {
-	a(loadFromLocalStorage());
+var getDef = async function(a) {
+  var data = await loadFromLocalStorage();
+  a(data);
 };
 var demo_ret;
 var getDemoProject = function() {
 	return demo_ret;
 };
-var setDemoProject = function(ret) {
-	demo_ret = ret;
-    saveInLocalStorage(demo_ret);
+var setDemoProject = async function(ret) {
+  demo_ret = ret;
+  try {
+    await saveInLocalStorage(demo_ret);
     window.location.href = window.location.href;
+  } catch (error) {
+    console.log('存储数据到 IndexedDB 出错：', error);
+  }
 };
+
 var localStorageKey = getQueryVariable('name')? getQueryVariable('name'): 'global';
 var room = localStorageKey;//'global';//cached
 var options = {
@@ -226,45 +353,32 @@ socket.on('get room', function (data) {
     console.log('get room：' + JSON.stringify(data));
     socket.emit('subscribe', { room: room });
 });
-var loadFromLocalStorage =  function() {
-	var ret;
-	if (localStorage) {
-		if (localStorage.getItem(localStorageKey)) {
-			try {
-				ret = JSON.parse(localStorage.getItem(localStorageKey));
-				console.log('ret', ret);
-			}catch(e) {
-			}
-		}
-	}
-//	alert(JSON.stringify(ret));
-	if (!ret) {
-//		ret = getDemoProject();
-		 jsonp('./users/' + localStorageKey).then(function(data) {
-//   		  console.log(data);
-   		  saveInLocalStorage(data);
-   		  window.location.href = window.location.href;
-   	  });
-	}
-	return ret;
+var loadFromLocalStorage = async function() {
+  try {
+    var ret = await IndexedDBManager.getDataFromIndexedDB(localStorageKey);
+    console.log('ret', ret);
+    if (!ret) {
+      ret = await jsonp('./users/' + localStorageKey);
+      await IndexedDBManager.saveDataToIndexedDB(localStorageKey, ret);
+      window.location.href = window.location.href;
+    }
+    return ret;
+  } catch (error) {
+    console.log('获取数据出错：', error);
+    return null;
+  }
 };
 //C:\Users\【用户名】\AppData\Local\【nw应用名称】\User Data\Default\Local Storage\chrome-extension_【随机字符】_0.localstorage
-var saveInLocalStorage = function(ret, callback) {
-	if (localStorage) {
-		localStorage.setItem(localStorageKey, JSON.stringify(ret));
-		if(callback) {
-			callback();
-		}
-	}
+var saveInLocalStorage = async function(ret) {
+    try {
+      await IndexedDBManager.saveDataToIndexedDB(localStorageKey, ret);
+    } catch (error) {
+      console.log('存储数据到 IndexedDB 出错：', error);
+    }
 };
-var saveBakInLocalStorage = function(callback) {
-	if (localStorage) {
-		let ret = JSON.parse(localStorage.getItem(localStorageKey));
-		localStorage.setItem(localStorageKey+'_bak', JSON.stringify(ret));
-		if(callback) {
-			callback();
-		}
-	}
+var saveBakInLocalStorage = async function() {
+    let ret = await IndexedDBManager.getDataFromIndexedDB(localStorageKey);
+    IndexedDBManager.saveDataToIndexedDB(localStorageKey+'_bak', ret);
 };
 //var jsonp = function(url) {
 //  var o = document.createElement("script");
@@ -291,37 +405,36 @@ var jsonp = function (uri) {
         (document.getElementsByTagName('head')[0] || document.body || document.documentElement).appendChild(script)
     });
 };
-var updateLocalStorage = function () {
-  var data = loadFromLocalStorage();
-//  alert(JSON.stringify(data));
-  (async () => {
-	  try{
-		  const rawResponse = await fetch('./users/' + localStorageKey, {
-			    method: 'POST',
-			    headers: {
-			      'Accept': 'application/json',
-			      'Content-Type': 'application/json'
-			    },
-			    body: JSON.stringify(data)
-			  });
-			  const content = await rawResponse.json();
-			  alert('保存成功！');
-			  console.log(content);
-	  } catch (error) {
-//		  console.log(error);
-		  alert('你的网络开小差了，请稍后再试。');
-	  }
-	})();
+var updateLocalStorage = async function() {
+  var data = await loadFromLocalStorage();
+  try {
+    const rawResponse = await fetch('./users/' + localStorageKey, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    const content = await rawResponse.json();
+    alert('保存成功！');
+    console.log(content);
+  } catch (error) {
+    // console.log(error);
+    alert('你的网络开小差了，请稍后再试。');
+  }
 };
-var refreshLocalStorage = function () {
-	if(confirm('警告！！！如果点击确认会丢失当前修改。')) {
-		saveBakInLocalStorage();
-		jsonp('./users/' + localStorageKey).then(function(data) {
-//			  console.log(data);
-			  saveInLocalStorage(data);
-			  window.location.href = window.location.href;
-		  });
-	}
+var refreshLocalStorage = async function() {
+  if (confirm('警告！！！如果点击确认会丢失当前修改。')) {
+    saveBakInLocalStorage();
+    try {
+      var data = await jsonp('./users/' + localStorageKey);
+      await saveInLocalStorage(data);
+      window.location.href = window.location.href;
+    } catch (error) {
+      console.log('请求数据出错：', error);
+    }
+  }
 };
 var HREF = window.location.href;
 var HREF_INDEX = HREF.lastIndexOf('?');
