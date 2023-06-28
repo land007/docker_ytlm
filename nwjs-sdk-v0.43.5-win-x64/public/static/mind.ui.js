@@ -1425,7 +1425,7 @@ var mindColla = {
     versionSaveTime: 180000,
     versionNow: 0,
     version: 0,
-    send: function(d) {
+    send: async function(d) {
         $("#savetip").text("正在保存...");
         mindColla.version++;
         if (mindColla.isOffLine) {
@@ -1455,14 +1455,12 @@ var mindColla = {
         socket.emit('chat message', c);
         //TODO jiayq 不存拆解对象，保存全部对象
         console.log('all_data', mind.model.topic);
-        saveInLocalStorage(mind.model.topic, function(){
-        	setTimeout(function() {
-                $("#savetip").text("所有更改已保存");
-                mind.plugins.navigator.init.call(mind)
-            }, 100);
-            mindColla.isSending = false;
-            mindColla.mess = [];
-        });
+        await saveInLocalStorage(mind.model.topic);
+        mindColla.isSending = false;
+        mindColla.mess = [];
+        await delay(100);
+        $("#savetip").text("所有更改已保存");
+        mind.plugins.navigator.init.call(mind);
 //        console.log('data', c);
 //        $.ajax({
 //            url: "/mindmap/msg",
@@ -3572,9 +3570,9 @@ var mindUI = {
         	  if(confirm('警告！！！如果点击确认会清空所有修改。')) {
 //        		  jsonp('./users/data').then(function(data) {
         		  saveBakInLocalStorage();
-	        	  jsonp('./users/demo').then(function(data) {
+	        	  jsonp('./users/demo').then(async function(data) {
 //	        		  console.log(data);
-	        		  saveInLocalStorage(data);
+	        		  await saveInLocalStorage(data);
 	        		  window.location.href = window.location.href;
 	        	  });
         	  }

@@ -368,6 +368,9 @@ var loadFromLocalStorage = async function() {
     return null;
   }
 };
+const delay = (ms)=> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+};
 //C:\Users\【用户名】\AppData\Local\【nw应用名称】\User Data\Default\Local Storage\chrome-extension_【随机字符】_0.localstorage
 var saveInLocalStorage = async function(ret) {
     try {
